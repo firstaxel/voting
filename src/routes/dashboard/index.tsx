@@ -1,9 +1,14 @@
-import { createFileRoute } from '@tanstack/react-router'
+import DashboardHeader from "@/components/dashboard-header";
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/dashboard/')({
-  component: RouteComponent,
-})
+export const Route = createFileRoute("/dashboard/")({
+	component: RouteComponent,
+});
 
 function RouteComponent() {
-  return <div>Hello "/dashboard/"!</div>
+	return (
+		<div>
+			<DashboardHeader />{" "}
+		</div>
+	);
 }
