@@ -1,6 +1,6 @@
 {
-  "id": "34cb163b-2ff2-4436-a4d9-9d0749a51565",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "c7dbccc1-b6cc-4272-9c23-10b67f0c68f9",
+  "prevId": "3560fa19-a167-4619-bf7d-4818e3131c11",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -365,7 +365,7 @@
         },
         "level": {
           "name": "level",
-          "type": "integer",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
@@ -400,29 +400,15 @@
           "primaryKey": false,
           "notNull": true
         },
-        "user_id": {
-          "name": "user_id",
-          "type": "varchar(36)",
+        "userId": {
+          "name": "userId",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
         }
       },
       "indexes": {},
-      "foreignKeys": {
-        "profile_user_id_users_id_fk": {
-          "name": "profile_user_id_users_id_fk",
-          "tableFrom": "profile",
-          "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "profile_id_unique": {
@@ -437,13 +423,6 @@
           "nullsNotDistinct": false,
           "columns": [
             "matric_no"
-          ]
-        },
-        "profile_user_id_unique": {
-          "name": "profile_user_id_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "user_id"
           ]
         }
       },

@@ -1,4 +1,4 @@
-import { StepperWithForm } from "@/components/stepper-with-form";
+import { OnboardingForm } from "@/components/onboarding-form";
 import { RedirectToSignIn, useAuthenticate } from "@daveyplate/better-auth-ui";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -23,7 +23,7 @@ function RouteComponent() {
 					</p>
 				</div>
 				<div className="w-full">
-					<StepperWithForm user={user} />
+					<OnboardingForm user={user} />
 				</div>
 			</div>
 		</div>

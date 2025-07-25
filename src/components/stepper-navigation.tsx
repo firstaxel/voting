@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Stepper, useStepper } from "./stepper-with-form";
+import { Stepper, useStepper } from "./onboarding-form";
 
 const StepperNavigation = () => {
 	const methods = useStepper();

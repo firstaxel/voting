@@ -1,5 +1,5 @@
+import { Stepper } from "@/components/onboarding-form";
 import StepperNavigation from "@/components/stepper-navigation";
-import { Stepper } from "@/components/stepper-with-form";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Outlet, createFileRoute } from "@tanstack/react-router";
 
