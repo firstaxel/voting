@@ -1,4 +1,5 @@
 import { router } from "@/server/api/router";
+import ip from "@arcjet/ip";
 import { createORPCClient } from "@orpc/client";
 import { RPCLink } from "@orpc/client/fetch";
 import { createRouterClient } from "@orpc/server";
@@ -10,10 +11,15 @@ import { getHeaders, getWebRequest } from "@tanstack/react-start/server";
 const getORPCClient = createIsomorphicFn()
 	.server(() =>
 		createRouterClient(router, {
-			context: async () => ({
-				headers: getHeaders() as HeadersInit,
-				request: getWebRequest(),
-			}),
+			context: () => {
+				const request = getWebRequest() as Request;
+
+				return {
+					headers: getHeaders() as HeadersInit,
+					request,
+					ip: ip(request),
+				};
+			},
 		}),
 	)
 	.client((): RouterClient<typeof router> => {
@@ -26,4 +32,4 @@ const getORPCClient = createIsomorphicFn()
 
 export const client: RouterClient<typeof router> = getORPCClient();
 
-export const orpc = createTanstackQueryUtils(client);
+export const orpcReactQuery = createTanstackQueryUtils(client);

@@ -1,14 +1,8 @@
 import { users } from "@/auth-schema";
 import { relations } from "drizzle-orm";
-import {
-	boolean,
-	integer,
-	pgEnum,
-	pgTable,
-	text,
-	uuid,
-	varchar,
-} from "drizzle-orm/pg-core";
+import { boolean, pgEnum, pgTable, varchar } from "drizzle-orm/pg-core";
+
+import { v4 as uuidv4 } from "uuid";
 
 // Define Enums
 export const genderEnum = pgEnum("gender", ["male", "female", "other"]);
@@ -19,9 +13,11 @@ export const modeOfStudyEnum = pgEnum("mode_of_study", [
 ]);
 
 export const profile = pgTable("profile", {
-	id: uuid("id").primaryKey().unique(), // UUID or shortid
-	name: varchar("name", { length: 100 }).notNull(),
-	avatarUrl: text("avatar_url"),
+	id: varchar("id")
+		.primaryKey()
+		.unique()
+		.$defaultFn(() => uuidv4()), // UUID or shortid
+
 	bio: varchar("bio", { length: 200 }),
 	phone: varchar("phone", { length: 20 }).notNull(),
 

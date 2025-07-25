@@ -1,4 +1,5 @@
 import { router } from "@/server/api/router";
+import ip from "@arcjet/ip";
 import { RPCHandler } from "@orpc/server/fetch";
 import { CORSPlugin } from "@orpc/server/plugins";
 import { createServerFileRoute } from "@tanstack/react-start/server";
@@ -18,6 +19,7 @@ async function handle({ request }: { request: Request }) {
 		context: {
 			headers: request.headers,
 			request,
+			ip: ip(request),
 		},
 	});
 

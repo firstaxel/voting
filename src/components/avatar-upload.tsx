@@ -16,6 +16,7 @@ import * as React from "react";
 import { toast } from "sonner";
 
 export function AvatarUploader({
+	user,
 	onChange,
 	value,
 }: {
@@ -93,7 +94,7 @@ export function AvatarUploader({
 						</FileUploadList>
 					) : (
 						<div>
-							<UserAvatar className="size-14" />
+							<UserAvatar className="size-14" user={user} />
 						</div>
 					)}
 				</FileUploadTrigger>

@@ -22,6 +22,20 @@
       "when": 1753286628494,
       "tag": "0002_bored_lord_hawal",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1753466125753,
+      "tag": "0003_breezy_shatterstar",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1753466477690,
+      "tag": "0004_young_valeria_richards",
+      "breakpoints": true
     }
   ]
 }

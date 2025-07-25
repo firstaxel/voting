@@ -1,27 +1,50 @@
-import { client } from "@/lib/orpc";
+import { db } from "@/database";
+import { profile } from "@/database/schema";
+import { auth } from "@/lib/auth";
 import { profileSchema } from "@/schema";
-import { api } from "..";
+import { ORPCError } from "@orpc/client";
+import { privateProcedure } from "..";
+import { uploadFile } from "./upload";
 
-export const create = api
+export const create = privateProcedure
 	.input(profileSchema)
 	.handler(async ({ context, input }) => {
-		const { avatarUrl } = input;
+		try {
+			const rateLimited = context.rateLimiterRes;
 
-		const { success, signedUrl } = await client.upload.generatePresignedURL({
-			filename: avatarUrl[0].name,
-			contentType: avatarUrl[0].type,
-		});
+			if (rateLimited.remainingPoints < 1) {
+				throw new ORPCError("Too many requests", { status: 429 });
+			}
+			const { avatarUrl, name, ...rest } = input;
 
-		if (!success) throw new Error("Failed to get upload URL");
+			const { success, retunedUrl } = await uploadFile({
+				files: avatarUrl,
+				userId: context.userId,
+				name,
+			});
+			if (!success) throw new Error("Failed to get upload URL");
 
-		const uploadResponse = await fetch(signedUrl, {
-			method: "PUT",
-			body: avatarUrl[0],
-			headers: {
-				"Content-Type": avatarUrl[0].type,
-			},
-		});
+			if (name !== context.user.name || retunedUrl) {
+				await auth.api.updateUser({
+					body: {
+						name: name !== context.user.name ? name : context.user.name,
+						image: retunedUrl ? retunedUrl : "",
+					},
+					headers: context.headers,
+				});
+			}
 
-		if (!uploadResponse.ok)
-			throw new Error(`Upload filed with status: ${uploadResponse.status}`);
+			const [res] = await db
+				.insert(profile)
+				.values({
+					completed: true,
+					userId: context.user.id,
+					...rest,
+				})
+				.returning();
+
+			return res;
+		} catch (error) {
+			console.log(error);
+		}
 	});

@@ -18,10 +18,14 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { defineStepper } from "@/components/ui/stepper";
-import { academicSchema, identitySchema } from "@/schema";
+import { orpcReactQuery } from "@/lib/orpc";
+import { type Profile, academicSchema, identitySchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import type { User } from "better-auth";
+import { Loader2 } from "lucide-react";
 import { useForm, useFormContext } from "react-hook-form";
+import { toast } from "sonner";
 import type { z } from "zod";
 import { AvatarUploader } from "./avatar-upload";
 import { PhoneInput } from "./phone-input";
@@ -52,8 +56,8 @@ const IdentityForm = ({ user }: { user: User }) => {
 							<FormLabel>Profile Picture</FormLabel>
 
 							<AvatarUploader
-								value={field.value}
 								user={user}
+								value={field.value}
 								onChange={field.onChange}
 							/>
 							<FormMessage />
@@ -63,6 +67,7 @@ const IdentityForm = ({ user }: { user: User }) => {
 
 				<div className="space-y-2">
 					<label
+						id={register("name").name}
 						htmlFor={register("name").name}
 						className="block text-sm font-medium text-primary"
 					>
@@ -81,6 +86,7 @@ const IdentityForm = ({ user }: { user: User }) => {
 				</div>
 				<div className="space-y-2">
 					<label
+						id={register("bio").name}
 						htmlFor={register("bio").name}
 						className="block text-sm font-medium text-primary"
 					>
@@ -99,6 +105,7 @@ const IdentityForm = ({ user }: { user: User }) => {
 				</div>
 				<div className="space-y-2">
 					<label
+						id={register("phone").name}
 						htmlFor={register("phone").name}
 						className="block text-sm font-medium text-primary"
 					>
@@ -343,8 +350,23 @@ const FormStepperComponent = ({ user }: { user: User }) => {
 		},
 	});
 
+	const values = form.getValues() as Profile;
+
+	const { mutate, isPending } = useMutation(
+		orpcReactQuery.profile.create.mutationOptions(),
+	);
+
 	const onSubmit = () => {
-		console.log(form.getValues());
+		mutate(values, {
+			onSuccess: () => {
+				toast.success("Profile created successfully", {
+					description: "You can now vote on the polls!",
+				});
+			},
+			onError: (error) => {
+				console.log(error);
+			},
+		});
 	};
 
 	return (
@@ -375,7 +397,7 @@ const FormStepperComponent = ({ user }: { user: User }) => {
 						<Button
 							variant="secondary"
 							onClick={methods.prev}
-							disabled={methods.isFirst}
+							disabled={methods.isFirst || isPending}
 						>
 							Previous
 						</Button>
@@ -389,8 +411,13 @@ const FormStepperComponent = ({ user }: { user: User }) => {
 								return true;
 							});
 						}}
+						disabled={isPending}
 					>
-						{methods.isLast ? "Onboard" : "Next"}
+						{isPending ? (
+							<Loader2 className="animate-spin" />
+						) : (
+							<>{methods.isLast ? "Onboard" : "Next"}</>
+						)}
 					</Button>
 				</Stepper.Controls>
 			</form>
