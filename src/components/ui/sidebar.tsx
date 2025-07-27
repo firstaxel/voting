@@ -1,14 +1,15 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { IconMenu2, IconX } from "@tabler/icons-react";
+import { IconMenu2, type IconProps, IconX } from "@tabler/icons-react";
 import { AnimatePresence, motion } from "motion/react";
 import type React from "react";
 import { createContext, useContext, useState } from "react";
+import { Button } from "./button";
 
 interface Links {
 	label: string;
-	href: string;
-	icon: React.JSX.Element | React.ReactNode;
+	path: string;
+	icon: React.ComponentType<IconProps>; // Optional: The Tabler Icon React Component itself
 }
 
 interface SidebarContextProps {
@@ -143,6 +144,7 @@ export const MobileSidebar = ({
 							<div
 								className="absolute right-10 top-10 z-50 text-neutral-800 dark:text-neutral-200"
 								onClick={() => setOpen(!open)}
+								onKeyUp={() => setOpen(!open)}
 							>
 								<IconX />
 							</div>
@@ -164,17 +166,21 @@ export const SidebarLink = ({
 	className?: string;
 }) => {
 	const { open, animate } = useSidebar();
+	const IconComponent = link.icon; // Get the component reference
+
 	return (
 		<a
-			href={link.href}
+			href={link.path}
 			className={cn(
-				"flex items-center justify-start gap-2  group/sidebar py-2",
+				"flex items-center justify-start gap-2  group/sidebar py-2 hover:bg-accent hover:text-accent-foreground dark:hover:bg-input/50",
+				"rounded-xl transition-all duration-200",
+				open && "px-2",
 				className,
 			)}
 			{...props}
 		>
-			{link.icon}
-
+			<IconComponent className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200 " />
+			{/* Render the component and pass props */}
 			<motion.span
 				animate={{
 					display: animate ? (open ? "inline-block" : "none") : "inline-block",

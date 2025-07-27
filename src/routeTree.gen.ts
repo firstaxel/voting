@@ -18,8 +18,15 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as OnboardingIndexRouteImport } from './routes/onboarding/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as AuthPathnameRouteImport } from './routes/auth/$pathname'
+import { Route as OwnerDashboardRouteRouteImport } from './routes/owner/dashboard/route'
+import { Route as OwnerAuthRouteRouteImport } from './routes/owner/auth/route'
+import { Route as AdminDashboardRouteRouteImport } from './routes/admin/dashboard/route'
 import { Route as AdminAuthRouteRouteImport } from './routes/admin/auth/route'
-import { Route as AdminAuthIndexRouteImport } from './routes/admin/auth/index'
+import { Route as OwnerDashboardIndexRouteImport } from './routes/owner/dashboard/index'
+import { Route as AdminDashboardIndexRouteImport } from './routes/admin/dashboard/index'
+import { Route as AdminApprovalIndexRouteImport } from './routes/admin/approval/index'
+import { Route as OwnerAuthPathnameRouteImport } from './routes/owner/auth/$pathname'
+import { Route as AdminAuthPathnameRouteImport } from './routes/admin/auth/$pathname'
 import { ServerRoute as ApiRpcSplatServerRouteImport } from './routes/api/rpc/$'
 import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/$'
 
@@ -60,14 +67,49 @@ const AuthPathnameRoute = AuthPathnameRouteImport.update({
   path: '/$pathname',
   getParentRoute: () => AuthRouteRoute,
 } as any)
+const OwnerDashboardRouteRoute = OwnerDashboardRouteRouteImport.update({
+  id: '/owner/dashboard',
+  path: '/owner/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OwnerAuthRouteRoute = OwnerAuthRouteRouteImport.update({
+  id: '/owner/auth',
+  path: '/owner/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminDashboardRouteRoute = AdminDashboardRouteRouteImport.update({
+  id: '/admin/dashboard',
+  path: '/admin/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminAuthRouteRoute = AdminAuthRouteRouteImport.update({
   id: '/admin/auth',
   path: '/admin/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminAuthIndexRoute = AdminAuthIndexRouteImport.update({
+const OwnerDashboardIndexRoute = OwnerDashboardIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => OwnerDashboardRouteRoute,
+} as any)
+const AdminDashboardIndexRoute = AdminDashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminDashboardRouteRoute,
+} as any)
+const AdminApprovalIndexRoute = AdminApprovalIndexRouteImport.update({
+  id: '/admin/approval/',
+  path: '/admin/approval/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OwnerAuthPathnameRoute = OwnerAuthPathnameRouteImport.update({
+  id: '/$pathname',
+  path: '/$pathname',
+  getParentRoute: () => OwnerAuthRouteRoute,
+} as any)
+const AdminAuthPathnameRoute = AdminAuthPathnameRouteImport.update({
+  id: '/$pathname',
+  path: '/$pathname',
   getParentRoute: () => AdminAuthRouteRoute,
 } as any)
 const ApiRpcSplatServerRoute = ApiRpcSplatServerRouteImport.update({
@@ -87,18 +129,31 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRouteRouteWithChildren
   '/onboarding': typeof OnboardingRouteRouteWithChildren
   '/admin/auth': typeof AdminAuthRouteRouteWithChildren
+  '/admin/dashboard': typeof AdminDashboardRouteRouteWithChildren
+  '/owner/auth': typeof OwnerAuthRouteRouteWithChildren
+  '/owner/dashboard': typeof OwnerDashboardRouteRouteWithChildren
   '/auth/$pathname': typeof AuthPathnameRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/onboarding/': typeof OnboardingIndexRoute
-  '/admin/auth/': typeof AdminAuthIndexRoute
+  '/admin/auth/$pathname': typeof AdminAuthPathnameRoute
+  '/owner/auth/$pathname': typeof OwnerAuthPathnameRoute
+  '/admin/approval': typeof AdminApprovalIndexRoute
+  '/admin/dashboard/': typeof AdminDashboardIndexRoute
+  '/owner/dashboard/': typeof OwnerDashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteRouteWithChildren
+  '/admin/auth': typeof AdminAuthRouteRouteWithChildren
+  '/owner/auth': typeof OwnerAuthRouteRouteWithChildren
   '/auth/$pathname': typeof AuthPathnameRoute
   '/dashboard': typeof DashboardIndexRoute
   '/onboarding': typeof OnboardingIndexRoute
-  '/admin/auth': typeof AdminAuthIndexRoute
+  '/admin/auth/$pathname': typeof AdminAuthPathnameRoute
+  '/owner/auth/$pathname': typeof OwnerAuthPathnameRoute
+  '/admin/approval': typeof AdminApprovalIndexRoute
+  '/admin/dashboard': typeof AdminDashboardIndexRoute
+  '/owner/dashboard': typeof OwnerDashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -107,10 +162,17 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRouteRouteWithChildren
   '/onboarding': typeof OnboardingRouteRouteWithChildren
   '/admin/auth': typeof AdminAuthRouteRouteWithChildren
+  '/admin/dashboard': typeof AdminDashboardRouteRouteWithChildren
+  '/owner/auth': typeof OwnerAuthRouteRouteWithChildren
+  '/owner/dashboard': typeof OwnerDashboardRouteRouteWithChildren
   '/auth/$pathname': typeof AuthPathnameRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/onboarding/': typeof OnboardingIndexRoute
-  '/admin/auth/': typeof AdminAuthIndexRoute
+  '/admin/auth/$pathname': typeof AdminAuthPathnameRoute
+  '/owner/auth/$pathname': typeof OwnerAuthPathnameRoute
+  '/admin/approval/': typeof AdminApprovalIndexRoute
+  '/admin/dashboard/': typeof AdminDashboardIndexRoute
+  '/owner/dashboard/': typeof OwnerDashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -120,18 +182,31 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/onboarding'
     | '/admin/auth'
+    | '/admin/dashboard'
+    | '/owner/auth'
+    | '/owner/dashboard'
     | '/auth/$pathname'
     | '/dashboard/'
     | '/onboarding/'
-    | '/admin/auth/'
+    | '/admin/auth/$pathname'
+    | '/owner/auth/$pathname'
+    | '/admin/approval'
+    | '/admin/dashboard/'
+    | '/owner/dashboard/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
+    | '/admin/auth'
+    | '/owner/auth'
     | '/auth/$pathname'
     | '/dashboard'
     | '/onboarding'
-    | '/admin/auth'
+    | '/admin/auth/$pathname'
+    | '/owner/auth/$pathname'
+    | '/admin/approval'
+    | '/admin/dashboard'
+    | '/owner/dashboard'
   id:
     | '__root__'
     | '/'
@@ -139,10 +214,17 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/onboarding'
     | '/admin/auth'
+    | '/admin/dashboard'
+    | '/owner/auth'
+    | '/owner/dashboard'
     | '/auth/$pathname'
     | '/dashboard/'
     | '/onboarding/'
-    | '/admin/auth/'
+    | '/admin/auth/$pathname'
+    | '/owner/auth/$pathname'
+    | '/admin/approval/'
+    | '/admin/dashboard/'
+    | '/owner/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -151,6 +233,10 @@ export interface RootRouteChildren {
   DashboardRouteRoute: typeof DashboardRouteRouteWithChildren
   OnboardingRouteRoute: typeof OnboardingRouteRouteWithChildren
   AdminAuthRouteRoute: typeof AdminAuthRouteRouteWithChildren
+  AdminDashboardRouteRoute: typeof AdminDashboardRouteRouteWithChildren
+  OwnerAuthRouteRoute: typeof OwnerAuthRouteRouteWithChildren
+  OwnerDashboardRouteRoute: typeof OwnerDashboardRouteRouteWithChildren
+  AdminApprovalIndexRoute: typeof AdminApprovalIndexRoute
 }
 export interface FileServerRoutesByFullPath {
   '/api/auth/$': typeof ApiAuthSplatServerRoute
@@ -229,6 +315,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthPathnameRouteImport
       parentRoute: typeof AuthRouteRoute
     }
+    '/owner/dashboard': {
+      id: '/owner/dashboard'
+      path: '/owner/dashboard'
+      fullPath: '/owner/dashboard'
+      preLoaderRoute: typeof OwnerDashboardRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/owner/auth': {
+      id: '/owner/auth'
+      path: '/owner/auth'
+      fullPath: '/owner/auth'
+      preLoaderRoute: typeof OwnerAuthRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/dashboard': {
+      id: '/admin/dashboard'
+      path: '/admin/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminDashboardRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/auth': {
       id: '/admin/auth'
       path: '/admin/auth'
@@ -236,11 +343,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAuthRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/auth/': {
-      id: '/admin/auth/'
+    '/owner/dashboard/': {
+      id: '/owner/dashboard/'
       path: '/'
-      fullPath: '/admin/auth/'
-      preLoaderRoute: typeof AdminAuthIndexRouteImport
+      fullPath: '/owner/dashboard/'
+      preLoaderRoute: typeof OwnerDashboardIndexRouteImport
+      parentRoute: typeof OwnerDashboardRouteRoute
+    }
+    '/admin/dashboard/': {
+      id: '/admin/dashboard/'
+      path: '/'
+      fullPath: '/admin/dashboard/'
+      preLoaderRoute: typeof AdminDashboardIndexRouteImport
+      parentRoute: typeof AdminDashboardRouteRoute
+    }
+    '/admin/approval/': {
+      id: '/admin/approval/'
+      path: '/admin/approval'
+      fullPath: '/admin/approval'
+      preLoaderRoute: typeof AdminApprovalIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/owner/auth/$pathname': {
+      id: '/owner/auth/$pathname'
+      path: '/$pathname'
+      fullPath: '/owner/auth/$pathname'
+      preLoaderRoute: typeof OwnerAuthPathnameRouteImport
+      parentRoute: typeof OwnerAuthRouteRoute
+    }
+    '/admin/auth/$pathname': {
+      id: '/admin/auth/$pathname'
+      path: '/$pathname'
+      fullPath: '/admin/auth/$pathname'
+      preLoaderRoute: typeof AdminAuthPathnameRouteImport
       parentRoute: typeof AdminAuthRouteRoute
     }
   }
@@ -301,16 +436,50 @@ const OnboardingRouteRouteWithChildren = OnboardingRouteRoute._addFileChildren(
 )
 
 interface AdminAuthRouteRouteChildren {
-  AdminAuthIndexRoute: typeof AdminAuthIndexRoute
+  AdminAuthPathnameRoute: typeof AdminAuthPathnameRoute
 }
 
 const AdminAuthRouteRouteChildren: AdminAuthRouteRouteChildren = {
-  AdminAuthIndexRoute: AdminAuthIndexRoute,
+  AdminAuthPathnameRoute: AdminAuthPathnameRoute,
 }
 
 const AdminAuthRouteRouteWithChildren = AdminAuthRouteRoute._addFileChildren(
   AdminAuthRouteRouteChildren,
 )
+
+interface AdminDashboardRouteRouteChildren {
+  AdminDashboardIndexRoute: typeof AdminDashboardIndexRoute
+}
+
+const AdminDashboardRouteRouteChildren: AdminDashboardRouteRouteChildren = {
+  AdminDashboardIndexRoute: AdminDashboardIndexRoute,
+}
+
+const AdminDashboardRouteRouteWithChildren =
+  AdminDashboardRouteRoute._addFileChildren(AdminDashboardRouteRouteChildren)
+
+interface OwnerAuthRouteRouteChildren {
+  OwnerAuthPathnameRoute: typeof OwnerAuthPathnameRoute
+}
+
+const OwnerAuthRouteRouteChildren: OwnerAuthRouteRouteChildren = {
+  OwnerAuthPathnameRoute: OwnerAuthPathnameRoute,
+}
+
+const OwnerAuthRouteRouteWithChildren = OwnerAuthRouteRoute._addFileChildren(
+  OwnerAuthRouteRouteChildren,
+)
+
+interface OwnerDashboardRouteRouteChildren {
+  OwnerDashboardIndexRoute: typeof OwnerDashboardIndexRoute
+}
+
+const OwnerDashboardRouteRouteChildren: OwnerDashboardRouteRouteChildren = {
+  OwnerDashboardIndexRoute: OwnerDashboardIndexRoute,
+}
+
+const OwnerDashboardRouteRouteWithChildren =
+  OwnerDashboardRouteRoute._addFileChildren(OwnerDashboardRouteRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -318,6 +487,10 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRouteRoute: DashboardRouteRouteWithChildren,
   OnboardingRouteRoute: OnboardingRouteRouteWithChildren,
   AdminAuthRouteRoute: AdminAuthRouteRouteWithChildren,
+  AdminDashboardRouteRoute: AdminDashboardRouteRouteWithChildren,
+  OwnerAuthRouteRoute: OwnerAuthRouteRouteWithChildren,
+  OwnerDashboardRouteRoute: OwnerDashboardRouteRouteWithChildren,
+  AdminApprovalIndexRoute: AdminApprovalIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

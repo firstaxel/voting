@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { AuthCard } from "@daveyplate/better-auth-ui";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/auth/$pathname")({
+export const Route = createFileRoute("/admin/auth/$pathname")({
 	component: RouteComponent,
 });
 
@@ -11,7 +11,7 @@ function RouteComponent() {
 
 	return (
 		<div className="flex grow flex-col items-center justify-center gap-4 p-4">
-			<AuthCard pathname={pathname} />
+			<AuthCard pathname={pathname} redirectTo="/onboarding" />
 		</div>
 	);
 }

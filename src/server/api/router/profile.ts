@@ -1,7 +1,7 @@
 import { db } from "@/database";
 import { profile } from "@/database/schema";
 import { auth } from "@/lib/auth";
-import { profileSchema } from "@/schema";
+import { profileSchema } from "@/schema/profile";
 import { ORPCError } from "@orpc/client";
 import { privateProcedure } from "..";
 import { uploadFile } from "./upload";

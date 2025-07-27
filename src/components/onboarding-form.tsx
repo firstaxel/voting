@@ -19,7 +19,8 @@ import {
 } from "@/components/ui/select";
 import { defineStepper } from "@/components/ui/stepper";
 import { orpcReactQuery } from "@/lib/orpc";
-import { type Profile, academicSchema, identitySchema } from "@/schema";
+import { fuoyePrograms } from "@/lib/university.constants";
+import { type Profile, academicSchema, identitySchema } from "@/schema/profile";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import type { User } from "better-auth";
@@ -199,6 +200,37 @@ function AcademicForm() {
 							{errors.department.message}
 						</span>
 					)}
+
+					<FormField
+						control={control}
+						name="modeOfStudy"
+						render={({ field }) => (
+							<FormItem className="space-y-2">
+								<FormLabel>Mode of Study</FormLabel>
+								<Select
+									onValueChange={field.onChange}
+									defaultValue={field.value}
+								>
+									<FormControl>
+										<SelectTrigger className="w-full">
+											<SelectValue placeholder="Select a mode of study" />
+										</SelectTrigger>
+									</FormControl>
+									<SelectContent>
+										<SelectGroup>
+											{fuoyePrograms.map((program) => (
+												<SelectItem key={program} value={program}>
+													{program}
+												</SelectItem>
+											))}
+										</SelectGroup>
+									</SelectContent>
+								</Select>
+
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 				</div>
 				<div className="space-y-2">
 					<label
