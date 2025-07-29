@@ -6,12 +6,11 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
-import { Header } from "../components/header";
-
 import TanStackQueryLayout from "../integrations/tanstack-query/layout.tsx";
 
 import appCss from "../styles/globals.css?url";
 
+import HydrationProvider from "@/hydration-provider.tsx";
 import { Providers } from "@/providers.tsx";
 import type { QueryClient } from "@tanstack/react-query";
 
@@ -75,7 +74,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 
 			<body>
 				<Providers>
-					<div className="flex min-h-svh flex-col ">{children}</div>
+					<HydrationProvider>
+						<div className="flex min-h-svh flex-col ">{children}</div>
+					</HydrationProvider>
 				</Providers>
 
 				<Scripts />

@@ -1,0 +1,1 @@
+ALTER TYPE "public"."election_type" ADD VALUE 'Club/Association Election' BEFORE 'Other';

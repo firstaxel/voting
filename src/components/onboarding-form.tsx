@@ -18,8 +18,8 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { defineStepper } from "@/components/ui/stepper";
+import { fuoyePrograms } from "@/data/university.constants";
 import { orpcReactQuery } from "@/lib/orpc";
-import { fuoyePrograms } from "@/lib/university.constants";
 import { type Profile, academicSchema, identitySchema } from "@/schema/profile";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -219,8 +219,8 @@ function AcademicForm() {
 									<SelectContent>
 										<SelectGroup>
 											{fuoyePrograms.map((program) => (
-												<SelectItem key={program} value={program}>
-													{program}
+												<SelectItem key={program.value} value={program.value}>
+													{program.label}
 												</SelectItem>
 											))}
 										</SelectGroup>
@@ -434,23 +434,43 @@ const FormStepperComponent = ({ user }: { user: User }) => {
 							Previous
 						</Button>
 					)}
-					<Button
-						type={"submit"}
-						onClick={() => {
-							methods.beforeNext(async () => {
-								const valid = await form.trigger();
-								if (!valid) return false;
-								return true;
-							});
-						}}
-						disabled={isPending}
-					>
-						{isPending ? (
-							<Loader2 className="animate-spin" />
-						) : (
-							<>{methods.isLast ? "Onboard" : "Next"}</>
-						)}
-					</Button>
+					{!methods.isLast ? (
+						<Button
+							type={"button"}
+							onClick={() => {
+								methods.beforeNext(async () => {
+									const valid = await form.trigger();
+									if (!valid) return false;
+									return true;
+								});
+							}}
+							disabled={isPending}
+						>
+							{isPending ? (
+								<Loader2 className="animate-spin" />
+							) : (
+								<>{methods.isLast ? "Onboard" : "Next"}</>
+							)}
+						</Button>
+					) : (
+						<Button
+							type={"submit"}
+							onClick={() => {
+								methods.beforeNext(async () => {
+									const valid = await form.trigger();
+									if (!valid) return false;
+									return true;
+								});
+							}}
+							disabled={isPending}
+						>
+							{isPending ? (
+								<Loader2 className="animate-spin" />
+							) : (
+								<>{methods.isLast ? "Onboard" : "Next"}</>
+							)}
+						</Button>
+					)}
 				</Stepper.Controls>
 			</form>
 		</Form>

@@ -1,4 +1,4 @@
-import { dashboards } from "@/lib/dashboard-navlinks";
+import { dashboards } from "@/data/dashboard-navlinks";
 import { cn } from "@/lib/utils";
 import { UserButton } from "@daveyplate/better-auth-ui";
 

@@ -1,6 +1,7 @@
 import { db } from "@/database";
 import { profile } from "@/database/schema";
 import { auth } from "@/lib/auth";
+import { opts } from "@/lib/ratelimit";
 import { profileSchema } from "@/schema/profile";
 import { ORPCError } from "@orpc/client";
 import { privateProcedure } from "..";
@@ -12,7 +13,7 @@ export const create = privateProcedure
 		try {
 			const rateLimited = context.rateLimiterRes;
 
-			if (rateLimited.remainingPoints < 1) {
+			if (rateLimited.remainingPoints < opts.points) {
 				throw new ORPCError("Too many requests", { status: 429 });
 			}
 			const { avatarUrl, name, ...rest } = input;

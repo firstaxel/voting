@@ -163,20 +163,16 @@ export const VoterEligibilitySchema = z
 		academicLevels: z
 			.array(
 				z.enum([
-					"Year 1",
-					"Year 2",
-					"Year 3",
-					"Year 4",
-					"Year 5+",
+					"100 Level",
+					"200 Level",
+					"300 Level",
+					"400 Level",
+					"500 Level",
 					"Postgraduate",
 					"Other",
 				]),
 			)
 			.optional(),
-
-		// Hall of Residence
-		hallOfResidenceRequired: z.boolean(),
-		hallNames: z.array(nonEmptyString).optional(),
 
 		// Minimum CGPA (optional for some elections)
 		minCGPA: z
@@ -263,16 +259,7 @@ export type VoterEligibilityFormData = z.infer<typeof VoterEligibilitySchema>;
 export const SecuritySettingsSchema = z.object({
 	// Voter authentication methods - could be university specific (e.g., student portal SSO)
 	authMethods: z
-		.array(
-			z.enum([
-				"University Email OTP",
-				"Student Portal SSO",
-				"SMS OTP",
-				"Password",
-				"Biometric",
-				"Other",
-			]),
-		)
+		.array(z.enum(["University Email OTP", "SMS OTP", "Password", "Biometric"]))
 		.min(1, "At least one authentication method must be selected."),
 	requireTwoFactorAuth: z.boolean(),
 
@@ -300,7 +287,6 @@ export type SecuritySettingsFormData = z.infer<typeof SecuritySettingsSchema>;
 export const FullElectionFormSchema = z.object({
 	...ElectionBasicsSchema.shape,
 	...ElectionDatesTimesSchema.shape,
-	...CandidateDetailsSchema.shape,
 	...VoterEligibilitySchema.shape,
 	...SecuritySettingsSchema.shape,
 });

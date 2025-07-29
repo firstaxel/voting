@@ -22,7 +22,6 @@ function RouteComponent() {
 		return <Navigate to="/admin/approval" replace />;
 	}
 
-	console.log(user);
 	return (
 		<main>
 			<SidebarLayout roleType="admin">

@@ -27,6 +27,8 @@ import { Route as AdminDashboardIndexRouteImport } from './routes/admin/dashboar
 import { Route as AdminApprovalIndexRouteImport } from './routes/admin/approval/index'
 import { Route as OwnerAuthPathnameRouteImport } from './routes/owner/auth/$pathname'
 import { Route as AdminAuthPathnameRouteImport } from './routes/admin/auth/$pathname'
+import { Route as AdminDashboardElectionsNewRouteImport } from './routes/admin/dashboard/elections/new'
+import { Route as AdminDashboardElectionsElectionIdIndexRouteImport } from './routes/admin/dashboard/elections/$electionId/index'
 import { ServerRoute as ApiRpcSplatServerRouteImport } from './routes/api/rpc/$'
 import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/$'
 
@@ -112,6 +114,18 @@ const AdminAuthPathnameRoute = AdminAuthPathnameRouteImport.update({
   path: '/$pathname',
   getParentRoute: () => AdminAuthRouteRoute,
 } as any)
+const AdminDashboardElectionsNewRoute =
+  AdminDashboardElectionsNewRouteImport.update({
+    id: '/elections/new',
+    path: '/elections/new',
+    getParentRoute: () => AdminDashboardRouteRoute,
+  } as any)
+const AdminDashboardElectionsElectionIdIndexRoute =
+  AdminDashboardElectionsElectionIdIndexRouteImport.update({
+    id: '/elections/$electionId/',
+    path: '/elections/$electionId/',
+    getParentRoute: () => AdminDashboardRouteRoute,
+  } as any)
 const ApiRpcSplatServerRoute = ApiRpcSplatServerRouteImport.update({
   id: '/api/rpc/$',
   path: '/api/rpc/$',
@@ -140,6 +154,8 @@ export interface FileRoutesByFullPath {
   '/admin/approval': typeof AdminApprovalIndexRoute
   '/admin/dashboard/': typeof AdminDashboardIndexRoute
   '/owner/dashboard/': typeof OwnerDashboardIndexRoute
+  '/admin/dashboard/elections/new': typeof AdminDashboardElectionsNewRoute
+  '/admin/dashboard/elections/$electionId': typeof AdminDashboardElectionsElectionIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -154,6 +170,8 @@ export interface FileRoutesByTo {
   '/admin/approval': typeof AdminApprovalIndexRoute
   '/admin/dashboard': typeof AdminDashboardIndexRoute
   '/owner/dashboard': typeof OwnerDashboardIndexRoute
+  '/admin/dashboard/elections/new': typeof AdminDashboardElectionsNewRoute
+  '/admin/dashboard/elections/$electionId': typeof AdminDashboardElectionsElectionIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -173,6 +191,8 @@ export interface FileRoutesById {
   '/admin/approval/': typeof AdminApprovalIndexRoute
   '/admin/dashboard/': typeof AdminDashboardIndexRoute
   '/owner/dashboard/': typeof OwnerDashboardIndexRoute
+  '/admin/dashboard/elections/new': typeof AdminDashboardElectionsNewRoute
+  '/admin/dashboard/elections/$electionId/': typeof AdminDashboardElectionsElectionIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -193,6 +213,8 @@ export interface FileRouteTypes {
     | '/admin/approval'
     | '/admin/dashboard/'
     | '/owner/dashboard/'
+    | '/admin/dashboard/elections/new'
+    | '/admin/dashboard/elections/$electionId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -207,6 +229,8 @@ export interface FileRouteTypes {
     | '/admin/approval'
     | '/admin/dashboard'
     | '/owner/dashboard'
+    | '/admin/dashboard/elections/new'
+    | '/admin/dashboard/elections/$electionId'
   id:
     | '__root__'
     | '/'
@@ -225,6 +249,8 @@ export interface FileRouteTypes {
     | '/admin/approval/'
     | '/admin/dashboard/'
     | '/owner/dashboard/'
+    | '/admin/dashboard/elections/new'
+    | '/admin/dashboard/elections/$electionId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -378,6 +404,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAuthPathnameRouteImport
       parentRoute: typeof AdminAuthRouteRoute
     }
+    '/admin/dashboard/elections/new': {
+      id: '/admin/dashboard/elections/new'
+      path: '/elections/new'
+      fullPath: '/admin/dashboard/elections/new'
+      preLoaderRoute: typeof AdminDashboardElectionsNewRouteImport
+      parentRoute: typeof AdminDashboardRouteRoute
+    }
+    '/admin/dashboard/elections/$electionId/': {
+      id: '/admin/dashboard/elections/$electionId/'
+      path: '/elections/$electionId'
+      fullPath: '/admin/dashboard/elections/$electionId'
+      preLoaderRoute: typeof AdminDashboardElectionsElectionIdIndexRouteImport
+      parentRoute: typeof AdminDashboardRouteRoute
+    }
   }
 }
 declare module '@tanstack/react-start/server' {
@@ -449,10 +489,15 @@ const AdminAuthRouteRouteWithChildren = AdminAuthRouteRoute._addFileChildren(
 
 interface AdminDashboardRouteRouteChildren {
   AdminDashboardIndexRoute: typeof AdminDashboardIndexRoute
+  AdminDashboardElectionsNewRoute: typeof AdminDashboardElectionsNewRoute
+  AdminDashboardElectionsElectionIdIndexRoute: typeof AdminDashboardElectionsElectionIdIndexRoute
 }
 
 const AdminDashboardRouteRouteChildren: AdminDashboardRouteRouteChildren = {
   AdminDashboardIndexRoute: AdminDashboardIndexRoute,
+  AdminDashboardElectionsNewRoute: AdminDashboardElectionsNewRoute,
+  AdminDashboardElectionsElectionIdIndexRoute:
+    AdminDashboardElectionsElectionIdIndexRoute,
 }
 
 const AdminDashboardRouteRouteWithChildren =
