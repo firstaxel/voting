@@ -12,23 +12,19 @@ import { createServerRootRoute } from '@tanstack/react-start/server'
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as OnboardingRouteRouteImport } from './routes/onboarding/route'
-import { Route as DashboardRouteRouteImport } from './routes/dashboard/route'
 import { Route as AuthRouteRouteImport } from './routes/auth/route'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as platformRouteRouteImport } from './routes/(platform)/route'
 import { Route as OnboardingIndexRouteImport } from './routes/onboarding/index'
-import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as AuthPathnameRouteImport } from './routes/auth/$pathname'
-import { Route as OwnerDashboardRouteRouteImport } from './routes/owner/dashboard/route'
-import { Route as OwnerAuthRouteRouteImport } from './routes/owner/auth/route'
-import { Route as AdminDashboardRouteRouteImport } from './routes/admin/dashboard/route'
-import { Route as AdminAuthRouteRouteImport } from './routes/admin/auth/route'
-import { Route as OwnerDashboardIndexRouteImport } from './routes/owner/dashboard/index'
-import { Route as AdminDashboardIndexRouteImport } from './routes/admin/dashboard/index'
-import { Route as AdminApprovalIndexRouteImport } from './routes/admin/approval/index'
-import { Route as OwnerAuthPathnameRouteImport } from './routes/owner/auth/$pathname'
-import { Route as AdminAuthPathnameRouteImport } from './routes/admin/auth/$pathname'
-import { Route as AdminDashboardElectionsNewRouteImport } from './routes/admin/dashboard/elections/new'
-import { Route as AdminDashboardElectionsElectionIdIndexRouteImport } from './routes/admin/dashboard/elections/$electionId/index'
+import { Route as platformDashboardRouteRouteImport } from './routes/(platform)/dashboard/route'
+import { Route as platformDashboardIndexRouteImport } from './routes/(platform)/dashboard/index'
+import { Route as platformOwnerDashboardRouteRouteImport } from './routes/(platform)/owner/dashboard/route'
+import { Route as platformAdminDashboardRouteRouteImport } from './routes/(platform)/admin/dashboard/route'
+import { Route as platformOwnerDashboardIndexRouteImport } from './routes/(platform)/owner/dashboard/index'
+import { Route as platformAdminDashboardIndexRouteImport } from './routes/(platform)/admin/dashboard/index'
+import { Route as platformAdminApprovalIndexRouteImport } from './routes/(platform)/admin/approval/index'
+import { Route as platformAdminDashboardElectionsNewRouteImport } from './routes/(platform)/admin/dashboard/elections/new'
+import { Route as platformAdminDashboardElectionsElectionIdIndexRouteImport } from './routes/(platform)/admin/dashboard/elections/$electionId/index'
 import { ServerRoute as ApiRpcSplatServerRouteImport } from './routes/api/rpc/$'
 import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/$'
 
@@ -39,19 +35,13 @@ const OnboardingRouteRoute = OnboardingRouteRouteImport.update({
   path: '/onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DashboardRouteRoute = DashboardRouteRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthRouteRoute = AuthRouteRouteImport.update({
   id: '/auth',
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const platformRouteRoute = platformRouteRouteImport.update({
+  id: '/(platform)',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OnboardingIndexRoute = OnboardingIndexRouteImport.update({
@@ -59,72 +49,62 @@ const OnboardingIndexRoute = OnboardingIndexRouteImport.update({
   path: '/',
   getParentRoute: () => OnboardingRouteRoute,
 } as any)
-const DashboardIndexRoute = DashboardIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => DashboardRouteRoute,
-} as any)
 const AuthPathnameRoute = AuthPathnameRouteImport.update({
   id: '/$pathname',
   path: '/$pathname',
   getParentRoute: () => AuthRouteRoute,
 } as any)
-const OwnerDashboardRouteRoute = OwnerDashboardRouteRouteImport.update({
-  id: '/owner/dashboard',
-  path: '/owner/dashboard',
-  getParentRoute: () => rootRouteImport,
+const platformDashboardRouteRoute = platformDashboardRouteRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => platformRouteRoute,
 } as any)
-const OwnerAuthRouteRoute = OwnerAuthRouteRouteImport.update({
-  id: '/owner/auth',
-  path: '/owner/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminDashboardRouteRoute = AdminDashboardRouteRouteImport.update({
-  id: '/admin/dashboard',
-  path: '/admin/dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminAuthRouteRoute = AdminAuthRouteRouteImport.update({
-  id: '/admin/auth',
-  path: '/admin/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OwnerDashboardIndexRoute = OwnerDashboardIndexRouteImport.update({
+const platformDashboardIndexRoute = platformDashboardIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => OwnerDashboardRouteRoute,
+  getParentRoute: () => platformDashboardRouteRoute,
 } as any)
-const AdminDashboardIndexRoute = AdminDashboardIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminDashboardRouteRoute,
-} as any)
-const AdminApprovalIndexRoute = AdminApprovalIndexRouteImport.update({
-  id: '/admin/approval/',
-  path: '/admin/approval/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OwnerAuthPathnameRoute = OwnerAuthPathnameRouteImport.update({
-  id: '/$pathname',
-  path: '/$pathname',
-  getParentRoute: () => OwnerAuthRouteRoute,
-} as any)
-const AdminAuthPathnameRoute = AdminAuthPathnameRouteImport.update({
-  id: '/$pathname',
-  path: '/$pathname',
-  getParentRoute: () => AdminAuthRouteRoute,
-} as any)
-const AdminDashboardElectionsNewRoute =
-  AdminDashboardElectionsNewRouteImport.update({
+const platformOwnerDashboardRouteRoute =
+  platformOwnerDashboardRouteRouteImport.update({
+    id: '/owner/dashboard',
+    path: '/owner/dashboard',
+    getParentRoute: () => platformRouteRoute,
+  } as any)
+const platformAdminDashboardRouteRoute =
+  platformAdminDashboardRouteRouteImport.update({
+    id: '/admin/dashboard',
+    path: '/admin/dashboard',
+    getParentRoute: () => platformRouteRoute,
+  } as any)
+const platformOwnerDashboardIndexRoute =
+  platformOwnerDashboardIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => platformOwnerDashboardRouteRoute,
+  } as any)
+const platformAdminDashboardIndexRoute =
+  platformAdminDashboardIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => platformAdminDashboardRouteRoute,
+  } as any)
+const platformAdminApprovalIndexRoute =
+  platformAdminApprovalIndexRouteImport.update({
+    id: '/admin/approval/',
+    path: '/admin/approval/',
+    getParentRoute: () => platformRouteRoute,
+  } as any)
+const platformAdminDashboardElectionsNewRoute =
+  platformAdminDashboardElectionsNewRouteImport.update({
     id: '/elections/new',
     path: '/elections/new',
-    getParentRoute: () => AdminDashboardRouteRoute,
+    getParentRoute: () => platformAdminDashboardRouteRoute,
   } as any)
-const AdminDashboardElectionsElectionIdIndexRoute =
-  AdminDashboardElectionsElectionIdIndexRouteImport.update({
+const platformAdminDashboardElectionsElectionIdIndexRoute =
+  platformAdminDashboardElectionsElectionIdIndexRouteImport.update({
     id: '/elections/$electionId/',
     path: '/elections/$electionId/',
-    getParentRoute: () => AdminDashboardRouteRoute,
+    getParentRoute: () => platformAdminDashboardRouteRoute,
   } as any)
 const ApiRpcSplatServerRoute = ApiRpcSplatServerRouteImport.update({
   id: '/api/rpc/$',
@@ -138,78 +118,62 @@ const ApiAuthSplatServerRoute = ApiAuthSplatServerRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof platformRouteRouteWithChildren
   '/auth': typeof AuthRouteRouteWithChildren
-  '/dashboard': typeof DashboardRouteRouteWithChildren
   '/onboarding': typeof OnboardingRouteRouteWithChildren
-  '/admin/auth': typeof AdminAuthRouteRouteWithChildren
-  '/admin/dashboard': typeof AdminDashboardRouteRouteWithChildren
-  '/owner/auth': typeof OwnerAuthRouteRouteWithChildren
-  '/owner/dashboard': typeof OwnerDashboardRouteRouteWithChildren
+  '/dashboard': typeof platformDashboardRouteRouteWithChildren
   '/auth/$pathname': typeof AuthPathnameRoute
-  '/dashboard/': typeof DashboardIndexRoute
   '/onboarding/': typeof OnboardingIndexRoute
-  '/admin/auth/$pathname': typeof AdminAuthPathnameRoute
-  '/owner/auth/$pathname': typeof OwnerAuthPathnameRoute
-  '/admin/approval': typeof AdminApprovalIndexRoute
-  '/admin/dashboard/': typeof AdminDashboardIndexRoute
-  '/owner/dashboard/': typeof OwnerDashboardIndexRoute
-  '/admin/dashboard/elections/new': typeof AdminDashboardElectionsNewRoute
-  '/admin/dashboard/elections/$electionId': typeof AdminDashboardElectionsElectionIdIndexRoute
+  '/admin/dashboard': typeof platformAdminDashboardRouteRouteWithChildren
+  '/owner/dashboard': typeof platformOwnerDashboardRouteRouteWithChildren
+  '/dashboard/': typeof platformDashboardIndexRoute
+  '/admin/approval': typeof platformAdminApprovalIndexRoute
+  '/admin/dashboard/': typeof platformAdminDashboardIndexRoute
+  '/owner/dashboard/': typeof platformOwnerDashboardIndexRoute
+  '/admin/dashboard/elections/new': typeof platformAdminDashboardElectionsNewRoute
+  '/admin/dashboard/elections/$electionId': typeof platformAdminDashboardElectionsElectionIdIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/': typeof platformRouteRouteWithChildren
   '/auth': typeof AuthRouteRouteWithChildren
-  '/admin/auth': typeof AdminAuthRouteRouteWithChildren
-  '/owner/auth': typeof OwnerAuthRouteRouteWithChildren
   '/auth/$pathname': typeof AuthPathnameRoute
-  '/dashboard': typeof DashboardIndexRoute
   '/onboarding': typeof OnboardingIndexRoute
-  '/admin/auth/$pathname': typeof AdminAuthPathnameRoute
-  '/owner/auth/$pathname': typeof OwnerAuthPathnameRoute
-  '/admin/approval': typeof AdminApprovalIndexRoute
-  '/admin/dashboard': typeof AdminDashboardIndexRoute
-  '/owner/dashboard': typeof OwnerDashboardIndexRoute
-  '/admin/dashboard/elections/new': typeof AdminDashboardElectionsNewRoute
-  '/admin/dashboard/elections/$electionId': typeof AdminDashboardElectionsElectionIdIndexRoute
+  '/dashboard': typeof platformDashboardIndexRoute
+  '/admin/approval': typeof platformAdminApprovalIndexRoute
+  '/admin/dashboard': typeof platformAdminDashboardIndexRoute
+  '/owner/dashboard': typeof platformOwnerDashboardIndexRoute
+  '/admin/dashboard/elections/new': typeof platformAdminDashboardElectionsNewRoute
+  '/admin/dashboard/elections/$electionId': typeof platformAdminDashboardElectionsElectionIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/(platform)': typeof platformRouteRouteWithChildren
   '/auth': typeof AuthRouteRouteWithChildren
-  '/dashboard': typeof DashboardRouteRouteWithChildren
   '/onboarding': typeof OnboardingRouteRouteWithChildren
-  '/admin/auth': typeof AdminAuthRouteRouteWithChildren
-  '/admin/dashboard': typeof AdminDashboardRouteRouteWithChildren
-  '/owner/auth': typeof OwnerAuthRouteRouteWithChildren
-  '/owner/dashboard': typeof OwnerDashboardRouteRouteWithChildren
+  '/(platform)/dashboard': typeof platformDashboardRouteRouteWithChildren
   '/auth/$pathname': typeof AuthPathnameRoute
-  '/dashboard/': typeof DashboardIndexRoute
   '/onboarding/': typeof OnboardingIndexRoute
-  '/admin/auth/$pathname': typeof AdminAuthPathnameRoute
-  '/owner/auth/$pathname': typeof OwnerAuthPathnameRoute
-  '/admin/approval/': typeof AdminApprovalIndexRoute
-  '/admin/dashboard/': typeof AdminDashboardIndexRoute
-  '/owner/dashboard/': typeof OwnerDashboardIndexRoute
-  '/admin/dashboard/elections/new': typeof AdminDashboardElectionsNewRoute
-  '/admin/dashboard/elections/$electionId/': typeof AdminDashboardElectionsElectionIdIndexRoute
+  '/(platform)/admin/dashboard': typeof platformAdminDashboardRouteRouteWithChildren
+  '/(platform)/owner/dashboard': typeof platformOwnerDashboardRouteRouteWithChildren
+  '/(platform)/dashboard/': typeof platformDashboardIndexRoute
+  '/(platform)/admin/approval/': typeof platformAdminApprovalIndexRoute
+  '/(platform)/admin/dashboard/': typeof platformAdminDashboardIndexRoute
+  '/(platform)/owner/dashboard/': typeof platformOwnerDashboardIndexRoute
+  '/(platform)/admin/dashboard/elections/new': typeof platformAdminDashboardElectionsNewRoute
+  '/(platform)/admin/dashboard/elections/$electionId/': typeof platformAdminDashboardElectionsElectionIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/auth'
-    | '/dashboard'
     | '/onboarding'
-    | '/admin/auth'
-    | '/admin/dashboard'
-    | '/owner/auth'
-    | '/owner/dashboard'
+    | '/dashboard'
     | '/auth/$pathname'
-    | '/dashboard/'
     | '/onboarding/'
-    | '/admin/auth/$pathname'
-    | '/owner/auth/$pathname'
+    | '/admin/dashboard'
+    | '/owner/dashboard'
+    | '/dashboard/'
     | '/admin/approval'
     | '/admin/dashboard/'
     | '/owner/dashboard/'
@@ -219,13 +183,9 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
-    | '/admin/auth'
-    | '/owner/auth'
     | '/auth/$pathname'
-    | '/dashboard'
     | '/onboarding'
-    | '/admin/auth/$pathname'
-    | '/owner/auth/$pathname'
+    | '/dashboard'
     | '/admin/approval'
     | '/admin/dashboard'
     | '/owner/dashboard'
@@ -233,36 +193,26 @@ export interface FileRouteTypes {
     | '/admin/dashboard/elections/$electionId'
   id:
     | '__root__'
-    | '/'
+    | '/(platform)'
     | '/auth'
-    | '/dashboard'
     | '/onboarding'
-    | '/admin/auth'
-    | '/admin/dashboard'
-    | '/owner/auth'
-    | '/owner/dashboard'
+    | '/(platform)/dashboard'
     | '/auth/$pathname'
-    | '/dashboard/'
     | '/onboarding/'
-    | '/admin/auth/$pathname'
-    | '/owner/auth/$pathname'
-    | '/admin/approval/'
-    | '/admin/dashboard/'
-    | '/owner/dashboard/'
-    | '/admin/dashboard/elections/new'
-    | '/admin/dashboard/elections/$electionId/'
+    | '/(platform)/admin/dashboard'
+    | '/(platform)/owner/dashboard'
+    | '/(platform)/dashboard/'
+    | '/(platform)/admin/approval/'
+    | '/(platform)/admin/dashboard/'
+    | '/(platform)/owner/dashboard/'
+    | '/(platform)/admin/dashboard/elections/new'
+    | '/(platform)/admin/dashboard/elections/$electionId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  platformRouteRoute: typeof platformRouteRouteWithChildren
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
-  DashboardRouteRoute: typeof DashboardRouteRouteWithChildren
   OnboardingRouteRoute: typeof OnboardingRouteRouteWithChildren
-  AdminAuthRouteRoute: typeof AdminAuthRouteRouteWithChildren
-  AdminDashboardRouteRoute: typeof AdminDashboardRouteRouteWithChildren
-  OwnerAuthRouteRoute: typeof OwnerAuthRouteRouteWithChildren
-  OwnerDashboardRouteRoute: typeof OwnerDashboardRouteRouteWithChildren
-  AdminApprovalIndexRoute: typeof AdminApprovalIndexRoute
 }
 export interface FileServerRoutesByFullPath {
   '/api/auth/$': typeof ApiAuthSplatServerRoute
@@ -299,13 +249,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -313,11 +256,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
+    '/(platform)': {
+      id: '/(platform)'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof platformRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/onboarding/': {
@@ -327,13 +270,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingIndexRouteImport
       parentRoute: typeof OnboardingRouteRoute
     }
-    '/dashboard/': {
-      id: '/dashboard/'
-      path: '/'
-      fullPath: '/dashboard/'
-      preLoaderRoute: typeof DashboardIndexRouteImport
-      parentRoute: typeof DashboardRouteRoute
-    }
     '/auth/$pathname': {
       id: '/auth/$pathname'
       path: '/$pathname'
@@ -341,82 +277,68 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthPathnameRouteImport
       parentRoute: typeof AuthRouteRoute
     }
-    '/owner/dashboard': {
-      id: '/owner/dashboard'
+    '/(platform)/dashboard': {
+      id: '/(platform)/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof platformDashboardRouteRouteImport
+      parentRoute: typeof platformRouteRoute
+    }
+    '/(platform)/dashboard/': {
+      id: '/(platform)/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof platformDashboardIndexRouteImport
+      parentRoute: typeof platformDashboardRouteRoute
+    }
+    '/(platform)/owner/dashboard': {
+      id: '/(platform)/owner/dashboard'
       path: '/owner/dashboard'
       fullPath: '/owner/dashboard'
-      preLoaderRoute: typeof OwnerDashboardRouteRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof platformOwnerDashboardRouteRouteImport
+      parentRoute: typeof platformRouteRoute
     }
-    '/owner/auth': {
-      id: '/owner/auth'
-      path: '/owner/auth'
-      fullPath: '/owner/auth'
-      preLoaderRoute: typeof OwnerAuthRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/dashboard': {
-      id: '/admin/dashboard'
+    '/(platform)/admin/dashboard': {
+      id: '/(platform)/admin/dashboard'
       path: '/admin/dashboard'
       fullPath: '/admin/dashboard'
-      preLoaderRoute: typeof AdminDashboardRouteRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof platformAdminDashboardRouteRouteImport
+      parentRoute: typeof platformRouteRoute
     }
-    '/admin/auth': {
-      id: '/admin/auth'
-      path: '/admin/auth'
-      fullPath: '/admin/auth'
-      preLoaderRoute: typeof AdminAuthRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/owner/dashboard/': {
-      id: '/owner/dashboard/'
+    '/(platform)/owner/dashboard/': {
+      id: '/(platform)/owner/dashboard/'
       path: '/'
       fullPath: '/owner/dashboard/'
-      preLoaderRoute: typeof OwnerDashboardIndexRouteImport
-      parentRoute: typeof OwnerDashboardRouteRoute
+      preLoaderRoute: typeof platformOwnerDashboardIndexRouteImport
+      parentRoute: typeof platformOwnerDashboardRouteRoute
     }
-    '/admin/dashboard/': {
-      id: '/admin/dashboard/'
+    '/(platform)/admin/dashboard/': {
+      id: '/(platform)/admin/dashboard/'
       path: '/'
       fullPath: '/admin/dashboard/'
-      preLoaderRoute: typeof AdminDashboardIndexRouteImport
-      parentRoute: typeof AdminDashboardRouteRoute
+      preLoaderRoute: typeof platformAdminDashboardIndexRouteImport
+      parentRoute: typeof platformAdminDashboardRouteRoute
     }
-    '/admin/approval/': {
-      id: '/admin/approval/'
+    '/(platform)/admin/approval/': {
+      id: '/(platform)/admin/approval/'
       path: '/admin/approval'
       fullPath: '/admin/approval'
-      preLoaderRoute: typeof AdminApprovalIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof platformAdminApprovalIndexRouteImport
+      parentRoute: typeof platformRouteRoute
     }
-    '/owner/auth/$pathname': {
-      id: '/owner/auth/$pathname'
-      path: '/$pathname'
-      fullPath: '/owner/auth/$pathname'
-      preLoaderRoute: typeof OwnerAuthPathnameRouteImport
-      parentRoute: typeof OwnerAuthRouteRoute
-    }
-    '/admin/auth/$pathname': {
-      id: '/admin/auth/$pathname'
-      path: '/$pathname'
-      fullPath: '/admin/auth/$pathname'
-      preLoaderRoute: typeof AdminAuthPathnameRouteImport
-      parentRoute: typeof AdminAuthRouteRoute
-    }
-    '/admin/dashboard/elections/new': {
-      id: '/admin/dashboard/elections/new'
+    '/(platform)/admin/dashboard/elections/new': {
+      id: '/(platform)/admin/dashboard/elections/new'
       path: '/elections/new'
       fullPath: '/admin/dashboard/elections/new'
-      preLoaderRoute: typeof AdminDashboardElectionsNewRouteImport
-      parentRoute: typeof AdminDashboardRouteRoute
+      preLoaderRoute: typeof platformAdminDashboardElectionsNewRouteImport
+      parentRoute: typeof platformAdminDashboardRouteRoute
     }
-    '/admin/dashboard/elections/$electionId/': {
-      id: '/admin/dashboard/elections/$electionId/'
+    '/(platform)/admin/dashboard/elections/$electionId/': {
+      id: '/(platform)/admin/dashboard/elections/$electionId/'
       path: '/elections/$electionId'
       fullPath: '/admin/dashboard/elections/$electionId'
-      preLoaderRoute: typeof AdminDashboardElectionsElectionIdIndexRouteImport
-      parentRoute: typeof AdminDashboardRouteRoute
+      preLoaderRoute: typeof platformAdminDashboardElectionsElectionIdIndexRouteImport
+      parentRoute: typeof platformAdminDashboardRouteRoute
     }
   }
 }
@@ -439,6 +361,74 @@ declare module '@tanstack/react-start/server' {
   }
 }
 
+interface platformDashboardRouteRouteChildren {
+  platformDashboardIndexRoute: typeof platformDashboardIndexRoute
+}
+
+const platformDashboardRouteRouteChildren: platformDashboardRouteRouteChildren =
+  {
+    platformDashboardIndexRoute: platformDashboardIndexRoute,
+  }
+
+const platformDashboardRouteRouteWithChildren =
+  platformDashboardRouteRoute._addFileChildren(
+    platformDashboardRouteRouteChildren,
+  )
+
+interface platformAdminDashboardRouteRouteChildren {
+  platformAdminDashboardIndexRoute: typeof platformAdminDashboardIndexRoute
+  platformAdminDashboardElectionsNewRoute: typeof platformAdminDashboardElectionsNewRoute
+  platformAdminDashboardElectionsElectionIdIndexRoute: typeof platformAdminDashboardElectionsElectionIdIndexRoute
+}
+
+const platformAdminDashboardRouteRouteChildren: platformAdminDashboardRouteRouteChildren =
+  {
+    platformAdminDashboardIndexRoute: platformAdminDashboardIndexRoute,
+    platformAdminDashboardElectionsNewRoute:
+      platformAdminDashboardElectionsNewRoute,
+    platformAdminDashboardElectionsElectionIdIndexRoute:
+      platformAdminDashboardElectionsElectionIdIndexRoute,
+  }
+
+const platformAdminDashboardRouteRouteWithChildren =
+  platformAdminDashboardRouteRoute._addFileChildren(
+    platformAdminDashboardRouteRouteChildren,
+  )
+
+interface platformOwnerDashboardRouteRouteChildren {
+  platformOwnerDashboardIndexRoute: typeof platformOwnerDashboardIndexRoute
+}
+
+const platformOwnerDashboardRouteRouteChildren: platformOwnerDashboardRouteRouteChildren =
+  {
+    platformOwnerDashboardIndexRoute: platformOwnerDashboardIndexRoute,
+  }
+
+const platformOwnerDashboardRouteRouteWithChildren =
+  platformOwnerDashboardRouteRoute._addFileChildren(
+    platformOwnerDashboardRouteRouteChildren,
+  )
+
+interface platformRouteRouteChildren {
+  platformDashboardRouteRoute: typeof platformDashboardRouteRouteWithChildren
+  platformAdminDashboardRouteRoute: typeof platformAdminDashboardRouteRouteWithChildren
+  platformOwnerDashboardRouteRoute: typeof platformOwnerDashboardRouteRouteWithChildren
+  platformAdminApprovalIndexRoute: typeof platformAdminApprovalIndexRoute
+}
+
+const platformRouteRouteChildren: platformRouteRouteChildren = {
+  platformDashboardRouteRoute: platformDashboardRouteRouteWithChildren,
+  platformAdminDashboardRouteRoute:
+    platformAdminDashboardRouteRouteWithChildren,
+  platformOwnerDashboardRouteRoute:
+    platformOwnerDashboardRouteRouteWithChildren,
+  platformAdminApprovalIndexRoute: platformAdminApprovalIndexRoute,
+}
+
+const platformRouteRouteWithChildren = platformRouteRoute._addFileChildren(
+  platformRouteRouteChildren,
+)
+
 interface AuthRouteRouteChildren {
   AuthPathnameRoute: typeof AuthPathnameRoute
 }
@@ -449,18 +439,6 @@ const AuthRouteRouteChildren: AuthRouteRouteChildren = {
 
 const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
   AuthRouteRouteChildren,
-)
-
-interface DashboardRouteRouteChildren {
-  DashboardIndexRoute: typeof DashboardIndexRoute
-}
-
-const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
-  DashboardIndexRoute: DashboardIndexRoute,
-}
-
-const DashboardRouteRouteWithChildren = DashboardRouteRoute._addFileChildren(
-  DashboardRouteRouteChildren,
 )
 
 interface OnboardingRouteRouteChildren {
@@ -475,67 +453,10 @@ const OnboardingRouteRouteWithChildren = OnboardingRouteRoute._addFileChildren(
   OnboardingRouteRouteChildren,
 )
 
-interface AdminAuthRouteRouteChildren {
-  AdminAuthPathnameRoute: typeof AdminAuthPathnameRoute
-}
-
-const AdminAuthRouteRouteChildren: AdminAuthRouteRouteChildren = {
-  AdminAuthPathnameRoute: AdminAuthPathnameRoute,
-}
-
-const AdminAuthRouteRouteWithChildren = AdminAuthRouteRoute._addFileChildren(
-  AdminAuthRouteRouteChildren,
-)
-
-interface AdminDashboardRouteRouteChildren {
-  AdminDashboardIndexRoute: typeof AdminDashboardIndexRoute
-  AdminDashboardElectionsNewRoute: typeof AdminDashboardElectionsNewRoute
-  AdminDashboardElectionsElectionIdIndexRoute: typeof AdminDashboardElectionsElectionIdIndexRoute
-}
-
-const AdminDashboardRouteRouteChildren: AdminDashboardRouteRouteChildren = {
-  AdminDashboardIndexRoute: AdminDashboardIndexRoute,
-  AdminDashboardElectionsNewRoute: AdminDashboardElectionsNewRoute,
-  AdminDashboardElectionsElectionIdIndexRoute:
-    AdminDashboardElectionsElectionIdIndexRoute,
-}
-
-const AdminDashboardRouteRouteWithChildren =
-  AdminDashboardRouteRoute._addFileChildren(AdminDashboardRouteRouteChildren)
-
-interface OwnerAuthRouteRouteChildren {
-  OwnerAuthPathnameRoute: typeof OwnerAuthPathnameRoute
-}
-
-const OwnerAuthRouteRouteChildren: OwnerAuthRouteRouteChildren = {
-  OwnerAuthPathnameRoute: OwnerAuthPathnameRoute,
-}
-
-const OwnerAuthRouteRouteWithChildren = OwnerAuthRouteRoute._addFileChildren(
-  OwnerAuthRouteRouteChildren,
-)
-
-interface OwnerDashboardRouteRouteChildren {
-  OwnerDashboardIndexRoute: typeof OwnerDashboardIndexRoute
-}
-
-const OwnerDashboardRouteRouteChildren: OwnerDashboardRouteRouteChildren = {
-  OwnerDashboardIndexRoute: OwnerDashboardIndexRoute,
-}
-
-const OwnerDashboardRouteRouteWithChildren =
-  OwnerDashboardRouteRoute._addFileChildren(OwnerDashboardRouteRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  platformRouteRoute: platformRouteRouteWithChildren,
   AuthRouteRoute: AuthRouteRouteWithChildren,
-  DashboardRouteRoute: DashboardRouteRouteWithChildren,
   OnboardingRouteRoute: OnboardingRouteRouteWithChildren,
-  AdminAuthRouteRoute: AdminAuthRouteRouteWithChildren,
-  AdminDashboardRouteRoute: AdminDashboardRouteRouteWithChildren,
-  OwnerAuthRouteRoute: OwnerAuthRouteRouteWithChildren,
-  OwnerDashboardRouteRoute: OwnerDashboardRouteRouteWithChildren,
-  AdminApprovalIndexRoute: AdminApprovalIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

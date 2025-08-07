@@ -14,6 +14,8 @@ import HydrationProvider from "@/hydration-provider.tsx";
 import { Providers } from "@/providers.tsx";
 import type { QueryClient } from "@tanstack/react-query";
 
+import "@fontsource/montserrat/400.css";
+
 interface MyRouterContext {
 	queryClient: QueryClient;
 }
@@ -43,8 +45,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 	component: () => (
 		<RootDocument>
 			<Outlet />
-			<TanStackRouterDevtools />
-
+			<TanStackRouterDevtools position="bottom-right" />
 			<TanStackQueryLayout />
 		</RootDocument>
 	),

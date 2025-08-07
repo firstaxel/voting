@@ -1,9 +1,10 @@
-import { SidebarLayout } from "@/components/sidebar-layout";
+import { useSidebar } from "@/components/animate-ui/radix/sidebar";
+import { DashboardSidebar } from "@/components/dashboard-sidebar";
 import { useSession } from "@/hooks/auth-hooks";
-import { RedirectToSignIn } from "@daveyplate/better-auth-ui";
+import { RedirectToSignIn, UserButton } from "@daveyplate/better-auth-ui";
 import { Navigate, Outlet, createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/admin/dashboard")({
+export const Route = createFileRoute("/(platform)/admin/dashboard")({
 	component: RouteComponent,
 });
 
@@ -24,13 +25,11 @@ function RouteComponent() {
 
 	return (
 		<main>
-			<SidebarLayout roleType="admin">
-				<div className="flex flex-1">
-					<div className="flex h-full w-full flex-1 flex-col gap-2 rounded-tl-2xl border border-neutral-200 bg-white p-2 md:p-10 dark:border-neutral-700 dark:bg-neutral-900">
-						<Outlet />
-					</div>
+			<DashboardSidebar roleType="admin">
+				<div className="flex h-full w-full flex-1 flex-col    bg-white p-2 md:p-10  dark:bg-neutral-900">
+					<Outlet />
 				</div>
-			</SidebarLayout>
+			</DashboardSidebar>
 		</main>
 	);
 }

@@ -225,11 +225,7 @@ function TabsContents({
 	);
 
 	return (
-		<div
-			data-slot="tabs-contents"
-			className={cn("overflow-hidden", className)}
-			{...props}
-		>
+		<div data-slot="tabs-contents" className={cn("", className)} {...props}>
 			<motion.div
 				className="flex -mx-2"
 				animate={{ x: `${activeIndex * -100}%` }}
@@ -262,7 +258,7 @@ function TabsContent({
 		<motion.div
 			role="tabpanel"
 			data-slot="tabs-content"
-			className={cn("overflow-hidden", className)}
+			className={cn("", className)}
 			initial={{ filter: "blur(0px)" }}
 			animate={{ filter: isActive ? "blur(0px)" : "blur(4px)" }}
 			exit={{ filter: "blur(0px)" }}

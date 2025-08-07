@@ -39,6 +39,8 @@ export const get = privateProcedure
 					votes: true,
 					voters: true,
 					electionDepartments: true,
+					electionAcademicLevels: true,
+					electionAuthMethods: true,
 				},
 			});
 

@@ -364,10 +364,16 @@ const dashboards: Dashboard[] = [
 				path: "/admin/dashboard/elections",
 				subLinks: [
 					{
+						id: "create-new-election",
+						label: "Create New Election",
+						icon: IconPlus,
+						path: "/admin/dashboard/elections/new",
+					},
+					{
 						id: "current-elections",
-						label: "Current Elections",
+						label: "All Elections",
 						icon: IconHourglass,
-						path: "/admin/dashboard/elections/current",
+						path: "/admin/dashboard/elections",
 					},
 					{
 						id: "upcoming-elections",
@@ -380,12 +386,6 @@ const dashboards: Dashboard[] = [
 						label: "Past Elections",
 						icon: IconArchive,
 						path: "/admin/dashboard/elections/past",
-					},
-					{
-						id: "create-new-election",
-						label: "Create New Election",
-						icon: IconPlus,
-						path: "/admin/dashboard/elections/new",
 					},
 				],
 			},
@@ -423,7 +423,7 @@ const dashboards: Dashboard[] = [
 			},
 			{
 				id: "candidate-management",
-				label: "Candidate Management",
+				label: "Candidates",
 				icon: IconUserPlus,
 				path: "/admin/candidates",
 				subLinks: [

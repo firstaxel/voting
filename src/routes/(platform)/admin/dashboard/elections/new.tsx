@@ -4,7 +4,7 @@ import {
 } from "@/components/elections/create-elections-form";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/admin/dashboard/elections/new")({
+export const Route = createFileRoute("/(platform)/admin/dashboard/elections/new")({
 	component: RouteComponent,
 });
 
@@ -32,5 +32,5 @@ function RouteComponent() {
 				</div>
 			</main>
 		</Stepper.Provider>
-	);
+	)
 }

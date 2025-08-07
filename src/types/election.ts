@@ -1,5 +1,4 @@
 import type schema from "@/database/schema";
-import type * as election from "@/database/schema/election";
 import type {
 	academicLevelEnum,
 	candidates,
