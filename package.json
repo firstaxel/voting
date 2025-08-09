@@ -100,5 +100,5 @@
     "vitest": "^3.0.5",
     "web-vitals": "^4.2.4",
     "wrangler": "^4.28.1"
-  }
+  },"packageManager": "npm@9.6.7"
 }
