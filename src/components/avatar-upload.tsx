@@ -9,19 +9,22 @@ import {
 	FileUploadList,
 	FileUploadTrigger,
 } from "@/components/ui/file-upload";
-import { UserAvatar } from "@daveyplate/better-auth-ui";
+import { AvatarFallback } from "@radix-ui/react-avatar";
 import type { User } from "better-auth";
-import { X } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import * as React from "react";
 import { toast } from "sonner";
+import { Avatar, AvatarImage } from "./ui/avatar";
 
 export function AvatarUploader({
 	user,
 	onChange,
+	image,
 	value,
 }: {
-	user: User;
-	value: File[];
+	user?: User;
+	image?: string;
+	value: File[] | undefined;
 	onChange: (value: File[]) => void;
 }) {
 	const [files, setFiles] = React.useState<File[]>();
@@ -70,7 +73,7 @@ export function AvatarUploader({
 								</FileUploadItem>
 							))}
 						</FileUploadList>
-					) : value ? (
+					) : value && value.length > 0 ? (
 						<FileUploadList orientation="horizontal">
 							{value.map((file) => (
 								<FileUploadItem
@@ -94,7 +97,15 @@ export function AvatarUploader({
 						</FileUploadList>
 					) : (
 						<div>
-							<UserAvatar className="size-14" user={user} />
+							<Avatar className="size-20">
+								<AvatarImage
+									src={user?.image ? user.image : image}
+									className="object-cover"
+								/>
+								<AvatarFallback className="flex items-center justify-center h-full w-full border rounded-full">
+									<Plus />
+								</AvatarFallback>
+							</Avatar>
 						</div>
 					)}
 				</FileUploadTrigger>

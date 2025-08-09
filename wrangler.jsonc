@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "voting",
+  "main": ".output/server/index.mjs",
+  "compatibility_date": "2025-08-08",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": ".output/public"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "kv_namespaces": [
+    {
+      "binding": "CACHE",
+      "id": "2ec7ef2f88584f63affe6ccb83fc456d"
+    }
+  ]
+}

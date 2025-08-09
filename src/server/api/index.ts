@@ -1,8 +1,11 @@
+import schema from "@/database/schema";
+import env from "@/env.config";
 import { auth } from "@/lib/auth";
 import { opts, rateLimiterRedis } from "@/lib/ratelimit";
 import { ORPCError } from "@orpc/client";
 import { os } from "@orpc/server";
 import type { ResponseHeadersPluginContext } from "@orpc/server/plugins";
+import { drizzle } from "drizzle-orm/postgres-js";
 
 interface ORPCContext extends ResponseHeadersPluginContext {
 	headers: HeadersInit;
@@ -12,8 +15,28 @@ interface ORPCContext extends ResponseHeadersPluginContext {
 
 export const base = os.$context<ORPCContext>();
 
+const dbMiddleware = base.middleware(async ({ next }) => {
+	const db = drizzle(env.DATABASE_URL, {
+		schema: {
+			...schema,
+		},
+	});
+	const result = await next({
+		context: {
+			db,
+		},
+	});
+
+	return result;
+});
+
 const authMiddleware = base.middleware(async ({ context, next }) => {
-	const session = await auth.api.getSession({
+	const db = drizzle(env.DATABASE_URL, {
+		schema: {
+			...schema,
+		},
+	});
+	const session = await auth(db).api.getSession({
 		headers: context.request.headers,
 	});
 
@@ -71,4 +94,5 @@ export const publicProcedure = base.use(rateLimiterMiddleware);
 
 export const privateProcedure = base
 	.use(authMiddleware)
-	.use(rateLimiterMiddleware);
+	.use(rateLimiterMiddleware)
+	.use(dbMiddleware);

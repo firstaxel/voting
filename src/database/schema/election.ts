@@ -63,6 +63,7 @@ export const timestamps = {
 
 export const elections = pgTable("elections", {
 	id: serial("id").primaryKey(),
+	electionImage: text("image"),
 	uniqueId: varchar("unique_id", { length: 255 })
 		.unique()
 		.$defaultFn(() => uuid()),
@@ -107,7 +108,9 @@ export const elections = pgTable("elections", {
 		.notNull()
 		.default(true),
 	auditTrailEnabled: boolean("audit_trail_enabled").notNull().default(true),
-
+	createdBy: varchar("createdBy").references(() => users.id, {
+		onDelete: "cascade",
+	}),
 	...timestamps,
 });
 

@@ -23,8 +23,10 @@ import { Route as platformAdminDashboardRouteRouteImport } from './routes/(platf
 import { Route as platformOwnerDashboardIndexRouteImport } from './routes/(platform)/owner/dashboard/index'
 import { Route as platformAdminDashboardIndexRouteImport } from './routes/(platform)/admin/dashboard/index'
 import { Route as platformAdminApprovalIndexRouteImport } from './routes/(platform)/admin/approval/index'
+import { Route as platformAdminDashboardElectionsIndexRouteImport } from './routes/(platform)/admin/dashboard/elections/index'
 import { Route as platformAdminDashboardElectionsNewRouteImport } from './routes/(platform)/admin/dashboard/elections/new'
 import { Route as platformAdminDashboardElectionsElectionIdIndexRouteImport } from './routes/(platform)/admin/dashboard/elections/$electionId/index'
+import { Route as platformAdminDashboardElectionsElectionIdEditIndexRouteImport } from './routes/(platform)/admin/dashboard/elections/$electionId/edit/index'
 import { ServerRoute as ApiRpcSplatServerRouteImport } from './routes/api/rpc/$'
 import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/$'
 
@@ -94,6 +96,12 @@ const platformAdminApprovalIndexRoute =
     path: '/admin/approval/',
     getParentRoute: () => platformRouteRoute,
   } as any)
+const platformAdminDashboardElectionsIndexRoute =
+  platformAdminDashboardElectionsIndexRouteImport.update({
+    id: '/elections/',
+    path: '/elections/',
+    getParentRoute: () => platformAdminDashboardRouteRoute,
+  } as any)
 const platformAdminDashboardElectionsNewRoute =
   platformAdminDashboardElectionsNewRouteImport.update({
     id: '/elections/new',
@@ -104,6 +112,12 @@ const platformAdminDashboardElectionsElectionIdIndexRoute =
   platformAdminDashboardElectionsElectionIdIndexRouteImport.update({
     id: '/elections/$electionId/',
     path: '/elections/$electionId/',
+    getParentRoute: () => platformAdminDashboardRouteRoute,
+  } as any)
+const platformAdminDashboardElectionsElectionIdEditIndexRoute =
+  platformAdminDashboardElectionsElectionIdEditIndexRouteImport.update({
+    id: '/elections/$electionId/edit/',
+    path: '/elections/$electionId/edit/',
     getParentRoute: () => platformAdminDashboardRouteRoute,
   } as any)
 const ApiRpcSplatServerRoute = ApiRpcSplatServerRouteImport.update({
@@ -131,7 +145,9 @@ export interface FileRoutesByFullPath {
   '/admin/dashboard/': typeof platformAdminDashboardIndexRoute
   '/owner/dashboard/': typeof platformOwnerDashboardIndexRoute
   '/admin/dashboard/elections/new': typeof platformAdminDashboardElectionsNewRoute
+  '/admin/dashboard/elections': typeof platformAdminDashboardElectionsIndexRoute
   '/admin/dashboard/elections/$electionId': typeof platformAdminDashboardElectionsElectionIdIndexRoute
+  '/admin/dashboard/elections/$electionId/edit': typeof platformAdminDashboardElectionsElectionIdEditIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof platformRouteRouteWithChildren
@@ -143,7 +159,9 @@ export interface FileRoutesByTo {
   '/admin/dashboard': typeof platformAdminDashboardIndexRoute
   '/owner/dashboard': typeof platformOwnerDashboardIndexRoute
   '/admin/dashboard/elections/new': typeof platformAdminDashboardElectionsNewRoute
+  '/admin/dashboard/elections': typeof platformAdminDashboardElectionsIndexRoute
   '/admin/dashboard/elections/$electionId': typeof platformAdminDashboardElectionsElectionIdIndexRoute
+  '/admin/dashboard/elections/$electionId/edit': typeof platformAdminDashboardElectionsElectionIdEditIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -160,7 +178,9 @@ export interface FileRoutesById {
   '/(platform)/admin/dashboard/': typeof platformAdminDashboardIndexRoute
   '/(platform)/owner/dashboard/': typeof platformOwnerDashboardIndexRoute
   '/(platform)/admin/dashboard/elections/new': typeof platformAdminDashboardElectionsNewRoute
+  '/(platform)/admin/dashboard/elections/': typeof platformAdminDashboardElectionsIndexRoute
   '/(platform)/admin/dashboard/elections/$electionId/': typeof platformAdminDashboardElectionsElectionIdIndexRoute
+  '/(platform)/admin/dashboard/elections/$electionId/edit/': typeof platformAdminDashboardElectionsElectionIdEditIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -178,7 +198,9 @@ export interface FileRouteTypes {
     | '/admin/dashboard/'
     | '/owner/dashboard/'
     | '/admin/dashboard/elections/new'
+    | '/admin/dashboard/elections'
     | '/admin/dashboard/elections/$electionId'
+    | '/admin/dashboard/elections/$electionId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -190,7 +212,9 @@ export interface FileRouteTypes {
     | '/admin/dashboard'
     | '/owner/dashboard'
     | '/admin/dashboard/elections/new'
+    | '/admin/dashboard/elections'
     | '/admin/dashboard/elections/$electionId'
+    | '/admin/dashboard/elections/$electionId/edit'
   id:
     | '__root__'
     | '/(platform)'
@@ -206,7 +230,9 @@ export interface FileRouteTypes {
     | '/(platform)/admin/dashboard/'
     | '/(platform)/owner/dashboard/'
     | '/(platform)/admin/dashboard/elections/new'
+    | '/(platform)/admin/dashboard/elections/'
     | '/(platform)/admin/dashboard/elections/$electionId/'
+    | '/(platform)/admin/dashboard/elections/$electionId/edit/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -326,6 +352,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof platformAdminApprovalIndexRouteImport
       parentRoute: typeof platformRouteRoute
     }
+    '/(platform)/admin/dashboard/elections/': {
+      id: '/(platform)/admin/dashboard/elections/'
+      path: '/elections'
+      fullPath: '/admin/dashboard/elections'
+      preLoaderRoute: typeof platformAdminDashboardElectionsIndexRouteImport
+      parentRoute: typeof platformAdminDashboardRouteRoute
+    }
     '/(platform)/admin/dashboard/elections/new': {
       id: '/(platform)/admin/dashboard/elections/new'
       path: '/elections/new'
@@ -338,6 +371,13 @@ declare module '@tanstack/react-router' {
       path: '/elections/$electionId'
       fullPath: '/admin/dashboard/elections/$electionId'
       preLoaderRoute: typeof platformAdminDashboardElectionsElectionIdIndexRouteImport
+      parentRoute: typeof platformAdminDashboardRouteRoute
+    }
+    '/(platform)/admin/dashboard/elections/$electionId/edit/': {
+      id: '/(platform)/admin/dashboard/elections/$electionId/edit/'
+      path: '/elections/$electionId/edit'
+      fullPath: '/admin/dashboard/elections/$electionId/edit'
+      preLoaderRoute: typeof platformAdminDashboardElectionsElectionIdEditIndexRouteImport
       parentRoute: typeof platformAdminDashboardRouteRoute
     }
   }
@@ -378,7 +418,9 @@ const platformDashboardRouteRouteWithChildren =
 interface platformAdminDashboardRouteRouteChildren {
   platformAdminDashboardIndexRoute: typeof platformAdminDashboardIndexRoute
   platformAdminDashboardElectionsNewRoute: typeof platformAdminDashboardElectionsNewRoute
+  platformAdminDashboardElectionsIndexRoute: typeof platformAdminDashboardElectionsIndexRoute
   platformAdminDashboardElectionsElectionIdIndexRoute: typeof platformAdminDashboardElectionsElectionIdIndexRoute
+  platformAdminDashboardElectionsElectionIdEditIndexRoute: typeof platformAdminDashboardElectionsElectionIdEditIndexRoute
 }
 
 const platformAdminDashboardRouteRouteChildren: platformAdminDashboardRouteRouteChildren =
@@ -386,8 +428,12 @@ const platformAdminDashboardRouteRouteChildren: platformAdminDashboardRouteRoute
     platformAdminDashboardIndexRoute: platformAdminDashboardIndexRoute,
     platformAdminDashboardElectionsNewRoute:
       platformAdminDashboardElectionsNewRoute,
+    platformAdminDashboardElectionsIndexRoute:
+      platformAdminDashboardElectionsIndexRoute,
     platformAdminDashboardElectionsElectionIdIndexRoute:
       platformAdminDashboardElectionsElectionIdIndexRoute,
+    platformAdminDashboardElectionsElectionIdEditIndexRoute:
+      platformAdminDashboardElectionsElectionIdEditIndexRoute,
   }
 
 const platformAdminDashboardRouteRouteWithChildren =

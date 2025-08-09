@@ -1,6 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ElectionWithRelations } from "@/types/election";
 import React from "react";
+import ListCandidates from "./elections/candidates/list-candidates";
 import ElectionPortalDetails from "./elections/election-portal-detail";
 
 export default function ElectionPortal({
@@ -46,7 +47,7 @@ export default function ElectionPortal({
 			</TabsContent>
 			<TabsContent value="election-candidates">
 				<div className="h-full">
-					<ElectionPortalDetails election={electionDetail} />
+					<ListCandidates candidates={electionDetail.candidates} />
 				</div>
 			</TabsContent>
 			<TabsContent value="election-voters">

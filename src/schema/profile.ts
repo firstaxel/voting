@@ -5,8 +5,7 @@ export const identitySchema = z.object({
 	name: z.string().min(2, "Name is required"),
 	avatarUrl: z
 		.array(z.custom<File>())
-		.min(1, "Please select at least one file")
-		.max(2, "Please select up to 2 files")
+		.max(1, "You can only upload a file")
 		.refine((files) => files.every((file) => file.size <= 5 * 1024 * 1024), {
 			message: "File size must be less than 5MB",
 			path: ["files"],

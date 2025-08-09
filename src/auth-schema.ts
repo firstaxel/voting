@@ -19,6 +19,8 @@ export const users = pgTable("users", {
 	roles: roles().default("student").notNull(),
 	approvedToBeAdmin: boolean("approved_to_be_admin").default(false).notNull(),
 	referredBy: text("user_id"),
+	onboarded: boolean("onboarded"),
+
 	adminKey: text("admin_key"),
 });
 

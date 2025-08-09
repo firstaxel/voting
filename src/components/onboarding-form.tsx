@@ -23,6 +23,7 @@ import { orpcReactQuery } from "@/lib/orpc";
 import { type Profile, academicSchema, identitySchema } from "@/schema/profile";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
 import type { User } from "better-auth";
 import { Loader2 } from "lucide-react";
 import { useForm, useFormContext } from "react-hook-form";
@@ -54,7 +55,7 @@ const IdentityForm = ({ user }: { user: User }) => {
 					name="avatarUrl"
 					render={({ field }) => (
 						<FormItem className="space-y-2">
-							<FormLabel>Profile Picture</FormLabel>
+							<FormLabel>Profile Image</FormLabel>
 
 							<AvatarUploader
 								user={user}
@@ -184,29 +185,12 @@ function AcademicForm() {
 					)}
 				</div>
 				<div className="space-y-2">
-					<label
-						htmlFor={register("department").name}
-						className="block text-sm font-medium text-primary"
-					>
-						Department
-					</label>
-					<Input
-						id={register("department").name}
-						{...register("department")}
-						className="block w-full rounded-md border p-2"
-					/>
-					{errors.department && (
-						<span className="text-sm text-destructive">
-							{errors.department.message}
-						</span>
-					)}
-
 					<FormField
 						control={control}
-						name="modeOfStudy"
+						name="department"
 						render={({ field }) => (
 							<FormItem className="space-y-2">
-								<FormLabel>Mode of Study</FormLabel>
+								<FormLabel>Department</FormLabel>
 								<Select
 									onValueChange={field.onChange}
 									defaultValue={field.value}
@@ -382,6 +366,8 @@ const FormStepperComponent = ({ user }: { user: User }) => {
 		},
 	});
 
+	const navigate = useNavigate();
+
 	const values = form.getValues() as Profile;
 
 	const { mutate, isPending } = useMutation(
@@ -390,10 +376,17 @@ const FormStepperComponent = ({ user }: { user: User }) => {
 
 	const onSubmit = () => {
 		mutate(values, {
-			onSuccess: () => {
-				toast.success("Profile created successfully", {
-					description: "You can now vote on the polls!",
-				});
+			onSuccess: (data) => {
+				if (data.success) {
+					toast.success("Profile created successfully", {
+						description: "You can now vote on the polls!",
+					});
+					navigate({
+						to: "/dashboard",
+					});
+				} else {
+					toast.error("Failed to create profile");
+				}
 			},
 			onError: (error) => {
 				console.log(error);

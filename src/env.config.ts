@@ -23,7 +23,12 @@ const env = defineEnv({
 		AWS_ACCESS_KEY_ID: z.string(),
 		AWS_SECRET_ACCESS_KEY: z.string(),
 		S3_BUCKET_NAME: z.string(),
+		BETTER_AUTH_SECRET: z.string(),
 		REDIS_URL: z.string().startsWith("rediss://"),
+		CLOUDFLARE_PUBLIC_ENDPOINT: z.string(),
+		R2_UPLOADER_USER: z.string(),
+		R2_UPLOADER_PASS: z.string(),
+		R2_UPLOADER_LINK: z.string(),
 	},
 
 	/**

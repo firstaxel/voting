@@ -37,9 +37,14 @@ import {
 	type VoterEligibilityFormData,
 	VoterEligibilitySchema,
 } from "@/schema/elections";
-import { ACADEMIC_LEVEL_OPTIONS, type SecurityOption } from "@/types/election";
+import {
+	ACADEMIC_LEVEL_OPTIONS,
+	type ElectionWithRelations,
+	type SecurityOption,
+} from "@/types/election";
 import { useNavigate } from "@tanstack/react-router";
 import { format } from "date-fns";
+import { AvatarUploader } from "../avatar-upload";
 import { MultiSelect } from "../multiple-select";
 import { Calendar } from "../ui/calendar";
 import { Checkbox } from "../ui/checkbox";
@@ -53,8 +58,20 @@ const ElectionBasisForm = () => {
 	return (
 		<ScrollArea className="h-[60vh]">
 			<div className="space-y-4">
-				<h2 className="text-2xl font-bold mb-4">Step 1: Election Basics</h2>
+				<h2 className="text-2xl font-bold mb-4"> Election Information</h2>
 
+				<FormField
+					control={form.control}
+					name="electionImage"
+					render={({ field }) => (
+						<FormItem className="space-y-2">
+							<FormLabel>Election Picture</FormLabel>
+
+							<AvatarUploader value={field.value} onChange={field.onChange} />
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
 				<FormField
 					control={form.control}
 					name="electionName"
@@ -1015,5 +1032,13 @@ const FormStepperComponent = () => {
 };
 
 export function ElectionsForm() {
-	return <FormStepperComponent />;
+	return (
+		<Stepper.Provider
+			className="space-y-4"
+			variant={"horizontal"}
+			labelOrientation={"vertical"}
+		>
+			<FormStepperComponent />
+		</Stepper.Provider>
+	);
 }

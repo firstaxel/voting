@@ -20,6 +20,14 @@ const dateSchema = z.coerce.date({
 
 // --- Step 1: Election Basics (University Specific) ---
 export const ElectionBasicsSchema = z.object({
+	electionImage: z
+		.array(z.custom<File>())
+		.max(1, "You can only upload a file")
+		.refine((files) => files.every((file) => file.size <= 5 * 1024 * 1024), {
+			message: "File size must be less than 5MB",
+			path: ["files"],
+		})
+		.optional(),
 	electionName: nonEmptyString.max(
 		255,
 		"Election name cannot exceed 255 characters.",

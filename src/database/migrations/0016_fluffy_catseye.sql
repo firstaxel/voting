@@ -1,0 +1,2 @@
+ALTER TABLE "elections" ADD COLUMN "createdBy" varchar;--> statement-breakpoint
+ALTER TABLE "elections" ADD CONSTRAINT "elections_createdBy_users_id_fk" FOREIGN KEY ("createdBy") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
