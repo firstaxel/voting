@@ -47,7 +47,9 @@ export default function ElectionPortal({
 			</TabsContent>
 			<TabsContent value="election-candidates">
 				<div className="h-full">
-					<ListCandidates candidates={electionDetail.candidates} />
+					<ListCandidates
+						candidates={electionDetail.candidatesRegistration?.candidates}
+					/>
 				</div>
 			</TabsContent>
 			<TabsContent value="election-voters">

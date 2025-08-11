@@ -6,6 +6,7 @@ import react from '@vitejs/plugin-react'
 
 import { wrapVinxiConfigWithSentry } from '@sentry/tanstackstart-react'
 
+
 const config = defineConfig({
   plugins: [
     // this is the plugin that enables path aliases
@@ -15,9 +16,9 @@ const config = defineConfig({
     tailwindcss(),
     tanstackStart({
       customViteReactPlugin: true,
-      target: 'cloudflare-module'
+      target: 'vercel'
     }),
-    react()
+    react(),
   ],
 
 

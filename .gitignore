@@ -5,6 +5,7 @@ dist-ssr
 *.local
 count.txt
 .env
+.env.*
 .nitro
 .tanstack
 .output
@@ -12,3 +13,4 @@ count.txt
 count.txt
 
 /generated/prisma
+.vercel

@@ -938,7 +938,7 @@ const FormStepperComponent = () => {
 
 				if (data) {
 					navigate({
-						to: `/admin/dashboard/elections/${data.uniqueId}`,
+						to: `/admin/elections/${data.uniqueId}`,
 					});
 				}
 			},
@@ -1021,7 +1021,7 @@ const FormStepperComponent = () => {
 							{isPending ? (
 								<Loader2 className="animate-spin" />
 							) : (
-								<>{methods.isLast ? "Onboard" : "Next"}</>
+								<>{methods.isLast ? "Create Election" : "Next"}</>
 							)}
 						</Button>
 					)}

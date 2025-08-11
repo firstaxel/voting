@@ -37,7 +37,7 @@ export const DashboardSidebar = ({
 	)?.navigation;
 
 	return (
-		<SidebarProvider defaultOpen={false}>
+		<SidebarProvider defaultOpen={true}>
 			<Sidebar collapsible="icon">
 				<SidebarHeader>
 					{/* Team Switcher */}

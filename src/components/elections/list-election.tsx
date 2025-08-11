@@ -7,9 +7,9 @@ import { Card, CardContent, CardHeader } from "../ui/card";
 
 const ListElection = ({ elections }: { elections: Election[] }) => {
 	return (
-		<div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
-			<Link to="/admin/dashboard/elections/new">
-				<Card className="hover:bg-primary/10 dark:hover:bg-primary/10 transition-colors duration-150">
+		<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+			<Link to="/admin/elections/new">
+				<Card className="hover:bg-primary/10 dark:hover:bg-primary/10 transition-colors duration-150 hfukk">
 					<CardContent className="h-full">
 						<div className="flex flex-col items-center justify-center space-y-2 h-full">
 							<PlusCircle className=" size-12 " />
@@ -20,7 +20,7 @@ const ListElection = ({ elections }: { elections: Election[] }) => {
 			</Link>
 			{elections.map((election) => (
 				<Link
-					to="/admin/dashboard/elections/$electionId"
+					to="/admin/elections/$electionId"
 					params={{
 						electionId: election.uniqueId as string,
 					}}
@@ -28,7 +28,7 @@ const ListElection = ({ elections }: { elections: Election[] }) => {
 				>
 					<Card className="hover:bg-primary/10 dark:hover:bg-primary/10 transition-colors duration-150">
 						<CardHeader>
-							<div className="flex items-center space-x-2">
+							<div className="flex  items-center space-x-2">
 								<Avatar className="size-14">
 									<AvatarImage
 										src={election.electionImage as string}
@@ -69,7 +69,7 @@ const ListElection = ({ elections }: { elections: Election[] }) => {
 								</div>
 
 								<Badge>
-									{election.votingEndDate.toLocaleDateString() <
+									{election.votingEndDate.toLocaleDateString() ===
 									new Date().toLocaleDateString()
 										? "Ended"
 										: "Open"}

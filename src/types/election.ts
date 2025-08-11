@@ -1,7 +1,7 @@
 import type schema from "@/database/schema";
 import type {
 	academicLevelEnum,
-	candidates,
+	candidate,
 	electionAcademicLevels,
 	electionAuthMethods,
 	electionDepartments,
@@ -38,8 +38,8 @@ export type SecurityOption =
 export type Election = typeof elections.$inferSelect; // for select queries
 export type NewElection = typeof elections.$inferInsert; // for insert queries
 
-export type Candidate = typeof candidates.$inferSelect;
-export type NewCandidate = typeof candidates.$inferInsert;
+export type Candidate = typeof candidate.$inferSelect;
+export type NewCandidate = typeof candidate.$inferInsert;
 
 export type Voter = typeof voters.$inferSelect;
 export type NewVoter = typeof voters.$inferInsert;

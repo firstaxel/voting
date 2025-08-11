@@ -2,12 +2,14 @@ import schema from "@/database/schema";
 import { auth } from "@/lib/auth";
 import { profileSchema } from "@/schema/profile";
 import { eq } from "drizzle-orm";
+import z from "zod";
 import { privateProcedure } from "..";
 import { uploadFile } from "./upload";
 
 export const create = privateProcedure
 	.input(profileSchema)
 	.handler(async ({ context, input }) => {
+		console.log(context.user);
 		try {
 			const { avatarUrl, name, ...rest } = input;
 
@@ -45,6 +47,38 @@ export const create = privateProcedure
 					.where(eq(schema.users.id, context.user.id));
 				return res;
 			});
+
+			return {
+				success: true,
+				data: res,
+			};
+		} catch (error) {
+			return {
+				success: false,
+				error: error,
+			};
+		}
+	});
+
+export const createCandidateLink = privateProcedure
+	.input(
+		z.object({
+			electionId: z.string(),
+		}),
+	)
+	.handler(async ({ context, input }) => {
+		try {
+			const { electionId } = input;
+
+			const [res] = await context.db
+				.insert(schema.candidatesRegistration)
+				.values({
+					autoApproval: true,
+					electionId,
+				})
+				.returning({
+					id: schema.candidatesRegistration.id,
+				});
 
 			return {
 				success: true,

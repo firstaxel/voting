@@ -17,16 +17,16 @@ import { Route as platformRouteRouteImport } from './routes/(platform)/route'
 import { Route as OnboardingIndexRouteImport } from './routes/onboarding/index'
 import { Route as AuthPathnameRouteImport } from './routes/auth/$pathname'
 import { Route as platformDashboardRouteRouteImport } from './routes/(platform)/dashboard/route'
+import { Route as platformAdminRouteRouteImport } from './routes/(platform)/admin/route'
 import { Route as platformDashboardIndexRouteImport } from './routes/(platform)/dashboard/index'
+import { Route as platformAdminIndexRouteImport } from './routes/(platform)/admin/index'
 import { Route as platformOwnerDashboardRouteRouteImport } from './routes/(platform)/owner/dashboard/route'
-import { Route as platformAdminDashboardRouteRouteImport } from './routes/(platform)/admin/dashboard/route'
 import { Route as platformOwnerDashboardIndexRouteImport } from './routes/(platform)/owner/dashboard/index'
-import { Route as platformAdminDashboardIndexRouteImport } from './routes/(platform)/admin/dashboard/index'
+import { Route as platformAdminElectionsIndexRouteImport } from './routes/(platform)/admin/elections/index'
 import { Route as platformAdminApprovalIndexRouteImport } from './routes/(platform)/admin/approval/index'
-import { Route as platformAdminDashboardElectionsIndexRouteImport } from './routes/(platform)/admin/dashboard/elections/index'
-import { Route as platformAdminDashboardElectionsNewRouteImport } from './routes/(platform)/admin/dashboard/elections/new'
-import { Route as platformAdminDashboardElectionsElectionIdIndexRouteImport } from './routes/(platform)/admin/dashboard/elections/$electionId/index'
-import { Route as platformAdminDashboardElectionsElectionIdEditIndexRouteImport } from './routes/(platform)/admin/dashboard/elections/$electionId/edit/index'
+import { Route as platformAdminElectionsNewRouteImport } from './routes/(platform)/admin/elections/new'
+import { Route as platformAdminElectionsElectionIdIndexRouteImport } from './routes/(platform)/admin/elections/$electionId/index'
+import { Route as platformAdminElectionsElectionIdEditIndexRouteImport } from './routes/(platform)/admin/elections/$electionId/edit/index'
 import { ServerRoute as ApiRpcSplatServerRouteImport } from './routes/api/rpc/$'
 import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/$'
 
@@ -61,21 +61,25 @@ const platformDashboardRouteRoute = platformDashboardRouteRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => platformRouteRoute,
 } as any)
+const platformAdminRouteRoute = platformAdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => platformRouteRoute,
+} as any)
 const platformDashboardIndexRoute = platformDashboardIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => platformDashboardRouteRoute,
 } as any)
+const platformAdminIndexRoute = platformAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => platformAdminRouteRoute,
+} as any)
 const platformOwnerDashboardRouteRoute =
   platformOwnerDashboardRouteRouteImport.update({
     id: '/owner/dashboard',
     path: '/owner/dashboard',
-    getParentRoute: () => platformRouteRoute,
-  } as any)
-const platformAdminDashboardRouteRoute =
-  platformAdminDashboardRouteRouteImport.update({
-    id: '/admin/dashboard',
-    path: '/admin/dashboard',
     getParentRoute: () => platformRouteRoute,
   } as any)
 const platformOwnerDashboardIndexRoute =
@@ -84,41 +88,35 @@ const platformOwnerDashboardIndexRoute =
     path: '/',
     getParentRoute: () => platformOwnerDashboardRouteRoute,
   } as any)
-const platformAdminDashboardIndexRoute =
-  platformAdminDashboardIndexRouteImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => platformAdminDashboardRouteRoute,
+const platformAdminElectionsIndexRoute =
+  platformAdminElectionsIndexRouteImport.update({
+    id: '/elections/',
+    path: '/elections/',
+    getParentRoute: () => platformAdminRouteRoute,
   } as any)
 const platformAdminApprovalIndexRoute =
   platformAdminApprovalIndexRouteImport.update({
-    id: '/admin/approval/',
-    path: '/admin/approval/',
-    getParentRoute: () => platformRouteRoute,
+    id: '/approval/',
+    path: '/approval/',
+    getParentRoute: () => platformAdminRouteRoute,
   } as any)
-const platformAdminDashboardElectionsIndexRoute =
-  platformAdminDashboardElectionsIndexRouteImport.update({
-    id: '/elections/',
-    path: '/elections/',
-    getParentRoute: () => platformAdminDashboardRouteRoute,
-  } as any)
-const platformAdminDashboardElectionsNewRoute =
-  platformAdminDashboardElectionsNewRouteImport.update({
+const platformAdminElectionsNewRoute =
+  platformAdminElectionsNewRouteImport.update({
     id: '/elections/new',
     path: '/elections/new',
-    getParentRoute: () => platformAdminDashboardRouteRoute,
+    getParentRoute: () => platformAdminRouteRoute,
   } as any)
-const platformAdminDashboardElectionsElectionIdIndexRoute =
-  platformAdminDashboardElectionsElectionIdIndexRouteImport.update({
+const platformAdminElectionsElectionIdIndexRoute =
+  platformAdminElectionsElectionIdIndexRouteImport.update({
     id: '/elections/$electionId/',
     path: '/elections/$electionId/',
-    getParentRoute: () => platformAdminDashboardRouteRoute,
+    getParentRoute: () => platformAdminRouteRoute,
   } as any)
-const platformAdminDashboardElectionsElectionIdEditIndexRoute =
-  platformAdminDashboardElectionsElectionIdEditIndexRouteImport.update({
+const platformAdminElectionsElectionIdEditIndexRoute =
+  platformAdminElectionsElectionIdEditIndexRouteImport.update({
     id: '/elections/$electionId/edit/',
     path: '/elections/$electionId/edit/',
-    getParentRoute: () => platformAdminDashboardRouteRoute,
+    getParentRoute: () => platformAdminRouteRoute,
   } as any)
 const ApiRpcSplatServerRoute = ApiRpcSplatServerRouteImport.update({
   id: '/api/rpc/$',
@@ -135,52 +133,52 @@ export interface FileRoutesByFullPath {
   '/': typeof platformRouteRouteWithChildren
   '/auth': typeof AuthRouteRouteWithChildren
   '/onboarding': typeof OnboardingRouteRouteWithChildren
+  '/admin': typeof platformAdminRouteRouteWithChildren
   '/dashboard': typeof platformDashboardRouteRouteWithChildren
   '/auth/$pathname': typeof AuthPathnameRoute
   '/onboarding/': typeof OnboardingIndexRoute
-  '/admin/dashboard': typeof platformAdminDashboardRouteRouteWithChildren
   '/owner/dashboard': typeof platformOwnerDashboardRouteRouteWithChildren
+  '/admin/': typeof platformAdminIndexRoute
   '/dashboard/': typeof platformDashboardIndexRoute
+  '/admin/elections/new': typeof platformAdminElectionsNewRoute
   '/admin/approval': typeof platformAdminApprovalIndexRoute
-  '/admin/dashboard/': typeof platformAdminDashboardIndexRoute
+  '/admin/elections': typeof platformAdminElectionsIndexRoute
   '/owner/dashboard/': typeof platformOwnerDashboardIndexRoute
-  '/admin/dashboard/elections/new': typeof platformAdminDashboardElectionsNewRoute
-  '/admin/dashboard/elections': typeof platformAdminDashboardElectionsIndexRoute
-  '/admin/dashboard/elections/$electionId': typeof platformAdminDashboardElectionsElectionIdIndexRoute
-  '/admin/dashboard/elections/$electionId/edit': typeof platformAdminDashboardElectionsElectionIdEditIndexRoute
+  '/admin/elections/$electionId': typeof platformAdminElectionsElectionIdIndexRoute
+  '/admin/elections/$electionId/edit': typeof platformAdminElectionsElectionIdEditIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof platformRouteRouteWithChildren
   '/auth': typeof AuthRouteRouteWithChildren
   '/auth/$pathname': typeof AuthPathnameRoute
   '/onboarding': typeof OnboardingIndexRoute
+  '/admin': typeof platformAdminIndexRoute
   '/dashboard': typeof platformDashboardIndexRoute
+  '/admin/elections/new': typeof platformAdminElectionsNewRoute
   '/admin/approval': typeof platformAdminApprovalIndexRoute
-  '/admin/dashboard': typeof platformAdminDashboardIndexRoute
+  '/admin/elections': typeof platformAdminElectionsIndexRoute
   '/owner/dashboard': typeof platformOwnerDashboardIndexRoute
-  '/admin/dashboard/elections/new': typeof platformAdminDashboardElectionsNewRoute
-  '/admin/dashboard/elections': typeof platformAdminDashboardElectionsIndexRoute
-  '/admin/dashboard/elections/$electionId': typeof platformAdminDashboardElectionsElectionIdIndexRoute
-  '/admin/dashboard/elections/$electionId/edit': typeof platformAdminDashboardElectionsElectionIdEditIndexRoute
+  '/admin/elections/$electionId': typeof platformAdminElectionsElectionIdIndexRoute
+  '/admin/elections/$electionId/edit': typeof platformAdminElectionsElectionIdEditIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(platform)': typeof platformRouteRouteWithChildren
   '/auth': typeof AuthRouteRouteWithChildren
   '/onboarding': typeof OnboardingRouteRouteWithChildren
+  '/(platform)/admin': typeof platformAdminRouteRouteWithChildren
   '/(platform)/dashboard': typeof platformDashboardRouteRouteWithChildren
   '/auth/$pathname': typeof AuthPathnameRoute
   '/onboarding/': typeof OnboardingIndexRoute
-  '/(platform)/admin/dashboard': typeof platformAdminDashboardRouteRouteWithChildren
   '/(platform)/owner/dashboard': typeof platformOwnerDashboardRouteRouteWithChildren
+  '/(platform)/admin/': typeof platformAdminIndexRoute
   '/(platform)/dashboard/': typeof platformDashboardIndexRoute
+  '/(platform)/admin/elections/new': typeof platformAdminElectionsNewRoute
   '/(platform)/admin/approval/': typeof platformAdminApprovalIndexRoute
-  '/(platform)/admin/dashboard/': typeof platformAdminDashboardIndexRoute
+  '/(platform)/admin/elections/': typeof platformAdminElectionsIndexRoute
   '/(platform)/owner/dashboard/': typeof platformOwnerDashboardIndexRoute
-  '/(platform)/admin/dashboard/elections/new': typeof platformAdminDashboardElectionsNewRoute
-  '/(platform)/admin/dashboard/elections/': typeof platformAdminDashboardElectionsIndexRoute
-  '/(platform)/admin/dashboard/elections/$electionId/': typeof platformAdminDashboardElectionsElectionIdIndexRoute
-  '/(platform)/admin/dashboard/elections/$electionId/edit/': typeof platformAdminDashboardElectionsElectionIdEditIndexRoute
+  '/(platform)/admin/elections/$electionId/': typeof platformAdminElectionsElectionIdIndexRoute
+  '/(platform)/admin/elections/$electionId/edit/': typeof platformAdminElectionsElectionIdEditIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -188,51 +186,51 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/onboarding'
+    | '/admin'
     | '/dashboard'
     | '/auth/$pathname'
     | '/onboarding/'
-    | '/admin/dashboard'
     | '/owner/dashboard'
+    | '/admin/'
     | '/dashboard/'
+    | '/admin/elections/new'
     | '/admin/approval'
-    | '/admin/dashboard/'
+    | '/admin/elections'
     | '/owner/dashboard/'
-    | '/admin/dashboard/elections/new'
-    | '/admin/dashboard/elections'
-    | '/admin/dashboard/elections/$electionId'
-    | '/admin/dashboard/elections/$electionId/edit'
+    | '/admin/elections/$electionId'
+    | '/admin/elections/$electionId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
     | '/auth/$pathname'
     | '/onboarding'
+    | '/admin'
     | '/dashboard'
+    | '/admin/elections/new'
     | '/admin/approval'
-    | '/admin/dashboard'
+    | '/admin/elections'
     | '/owner/dashboard'
-    | '/admin/dashboard/elections/new'
-    | '/admin/dashboard/elections'
-    | '/admin/dashboard/elections/$electionId'
-    | '/admin/dashboard/elections/$electionId/edit'
+    | '/admin/elections/$electionId'
+    | '/admin/elections/$electionId/edit'
   id:
     | '__root__'
     | '/(platform)'
     | '/auth'
     | '/onboarding'
+    | '/(platform)/admin'
     | '/(platform)/dashboard'
     | '/auth/$pathname'
     | '/onboarding/'
-    | '/(platform)/admin/dashboard'
     | '/(platform)/owner/dashboard'
+    | '/(platform)/admin/'
     | '/(platform)/dashboard/'
+    | '/(platform)/admin/elections/new'
     | '/(platform)/admin/approval/'
-    | '/(platform)/admin/dashboard/'
+    | '/(platform)/admin/elections/'
     | '/(platform)/owner/dashboard/'
-    | '/(platform)/admin/dashboard/elections/new'
-    | '/(platform)/admin/dashboard/elections/'
-    | '/(platform)/admin/dashboard/elections/$electionId/'
-    | '/(platform)/admin/dashboard/elections/$electionId/edit/'
+    | '/(platform)/admin/elections/$electionId/'
+    | '/(platform)/admin/elections/$electionId/edit/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -310,6 +308,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof platformDashboardRouteRouteImport
       parentRoute: typeof platformRouteRoute
     }
+    '/(platform)/admin': {
+      id: '/(platform)/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof platformAdminRouteRouteImport
+      parentRoute: typeof platformRouteRoute
+    }
     '/(platform)/dashboard/': {
       id: '/(platform)/dashboard/'
       path: '/'
@@ -317,18 +322,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof platformDashboardIndexRouteImport
       parentRoute: typeof platformDashboardRouteRoute
     }
+    '/(platform)/admin/': {
+      id: '/(platform)/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof platformAdminIndexRouteImport
+      parentRoute: typeof platformAdminRouteRoute
+    }
     '/(platform)/owner/dashboard': {
       id: '/(platform)/owner/dashboard'
       path: '/owner/dashboard'
       fullPath: '/owner/dashboard'
       preLoaderRoute: typeof platformOwnerDashboardRouteRouteImport
-      parentRoute: typeof platformRouteRoute
-    }
-    '/(platform)/admin/dashboard': {
-      id: '/(platform)/admin/dashboard'
-      path: '/admin/dashboard'
-      fullPath: '/admin/dashboard'
-      preLoaderRoute: typeof platformAdminDashboardRouteRouteImport
       parentRoute: typeof platformRouteRoute
     }
     '/(platform)/owner/dashboard/': {
@@ -338,47 +343,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof platformOwnerDashboardIndexRouteImport
       parentRoute: typeof platformOwnerDashboardRouteRoute
     }
-    '/(platform)/admin/dashboard/': {
-      id: '/(platform)/admin/dashboard/'
-      path: '/'
-      fullPath: '/admin/dashboard/'
-      preLoaderRoute: typeof platformAdminDashboardIndexRouteImport
-      parentRoute: typeof platformAdminDashboardRouteRoute
+    '/(platform)/admin/elections/': {
+      id: '/(platform)/admin/elections/'
+      path: '/elections'
+      fullPath: '/admin/elections'
+      preLoaderRoute: typeof platformAdminElectionsIndexRouteImport
+      parentRoute: typeof platformAdminRouteRoute
     }
     '/(platform)/admin/approval/': {
       id: '/(platform)/admin/approval/'
-      path: '/admin/approval'
+      path: '/approval'
       fullPath: '/admin/approval'
       preLoaderRoute: typeof platformAdminApprovalIndexRouteImport
-      parentRoute: typeof platformRouteRoute
+      parentRoute: typeof platformAdminRouteRoute
     }
-    '/(platform)/admin/dashboard/elections/': {
-      id: '/(platform)/admin/dashboard/elections/'
-      path: '/elections'
-      fullPath: '/admin/dashboard/elections'
-      preLoaderRoute: typeof platformAdminDashboardElectionsIndexRouteImport
-      parentRoute: typeof platformAdminDashboardRouteRoute
-    }
-    '/(platform)/admin/dashboard/elections/new': {
-      id: '/(platform)/admin/dashboard/elections/new'
+    '/(platform)/admin/elections/new': {
+      id: '/(platform)/admin/elections/new'
       path: '/elections/new'
-      fullPath: '/admin/dashboard/elections/new'
-      preLoaderRoute: typeof platformAdminDashboardElectionsNewRouteImport
-      parentRoute: typeof platformAdminDashboardRouteRoute
+      fullPath: '/admin/elections/new'
+      preLoaderRoute: typeof platformAdminElectionsNewRouteImport
+      parentRoute: typeof platformAdminRouteRoute
     }
-    '/(platform)/admin/dashboard/elections/$electionId/': {
-      id: '/(platform)/admin/dashboard/elections/$electionId/'
+    '/(platform)/admin/elections/$electionId/': {
+      id: '/(platform)/admin/elections/$electionId/'
       path: '/elections/$electionId'
-      fullPath: '/admin/dashboard/elections/$electionId'
-      preLoaderRoute: typeof platformAdminDashboardElectionsElectionIdIndexRouteImport
-      parentRoute: typeof platformAdminDashboardRouteRoute
+      fullPath: '/admin/elections/$electionId'
+      preLoaderRoute: typeof platformAdminElectionsElectionIdIndexRouteImport
+      parentRoute: typeof platformAdminRouteRoute
     }
-    '/(platform)/admin/dashboard/elections/$electionId/edit/': {
-      id: '/(platform)/admin/dashboard/elections/$electionId/edit/'
+    '/(platform)/admin/elections/$electionId/edit/': {
+      id: '/(platform)/admin/elections/$electionId/edit/'
       path: '/elections/$electionId/edit'
-      fullPath: '/admin/dashboard/elections/$electionId/edit'
-      preLoaderRoute: typeof platformAdminDashboardElectionsElectionIdEditIndexRouteImport
-      parentRoute: typeof platformAdminDashboardRouteRoute
+      fullPath: '/admin/elections/$electionId/edit'
+      preLoaderRoute: typeof platformAdminElectionsElectionIdEditIndexRouteImport
+      parentRoute: typeof platformAdminRouteRoute
     }
   }
 }
@@ -401,6 +399,29 @@ declare module '@tanstack/react-start/server' {
   }
 }
 
+interface platformAdminRouteRouteChildren {
+  platformAdminIndexRoute: typeof platformAdminIndexRoute
+  platformAdminElectionsNewRoute: typeof platformAdminElectionsNewRoute
+  platformAdminApprovalIndexRoute: typeof platformAdminApprovalIndexRoute
+  platformAdminElectionsIndexRoute: typeof platformAdminElectionsIndexRoute
+  platformAdminElectionsElectionIdIndexRoute: typeof platformAdminElectionsElectionIdIndexRoute
+  platformAdminElectionsElectionIdEditIndexRoute: typeof platformAdminElectionsElectionIdEditIndexRoute
+}
+
+const platformAdminRouteRouteChildren: platformAdminRouteRouteChildren = {
+  platformAdminIndexRoute: platformAdminIndexRoute,
+  platformAdminElectionsNewRoute: platformAdminElectionsNewRoute,
+  platformAdminApprovalIndexRoute: platformAdminApprovalIndexRoute,
+  platformAdminElectionsIndexRoute: platformAdminElectionsIndexRoute,
+  platformAdminElectionsElectionIdIndexRoute:
+    platformAdminElectionsElectionIdIndexRoute,
+  platformAdminElectionsElectionIdEditIndexRoute:
+    platformAdminElectionsElectionIdEditIndexRoute,
+}
+
+const platformAdminRouteRouteWithChildren =
+  platformAdminRouteRoute._addFileChildren(platformAdminRouteRouteChildren)
+
 interface platformDashboardRouteRouteChildren {
   platformDashboardIndexRoute: typeof platformDashboardIndexRoute
 }
@@ -413,32 +434,6 @@ const platformDashboardRouteRouteChildren: platformDashboardRouteRouteChildren =
 const platformDashboardRouteRouteWithChildren =
   platformDashboardRouteRoute._addFileChildren(
     platformDashboardRouteRouteChildren,
-  )
-
-interface platformAdminDashboardRouteRouteChildren {
-  platformAdminDashboardIndexRoute: typeof platformAdminDashboardIndexRoute
-  platformAdminDashboardElectionsNewRoute: typeof platformAdminDashboardElectionsNewRoute
-  platformAdminDashboardElectionsIndexRoute: typeof platformAdminDashboardElectionsIndexRoute
-  platformAdminDashboardElectionsElectionIdIndexRoute: typeof platformAdminDashboardElectionsElectionIdIndexRoute
-  platformAdminDashboardElectionsElectionIdEditIndexRoute: typeof platformAdminDashboardElectionsElectionIdEditIndexRoute
-}
-
-const platformAdminDashboardRouteRouteChildren: platformAdminDashboardRouteRouteChildren =
-  {
-    platformAdminDashboardIndexRoute: platformAdminDashboardIndexRoute,
-    platformAdminDashboardElectionsNewRoute:
-      platformAdminDashboardElectionsNewRoute,
-    platformAdminDashboardElectionsIndexRoute:
-      platformAdminDashboardElectionsIndexRoute,
-    platformAdminDashboardElectionsElectionIdIndexRoute:
-      platformAdminDashboardElectionsElectionIdIndexRoute,
-    platformAdminDashboardElectionsElectionIdEditIndexRoute:
-      platformAdminDashboardElectionsElectionIdEditIndexRoute,
-  }
-
-const platformAdminDashboardRouteRouteWithChildren =
-  platformAdminDashboardRouteRoute._addFileChildren(
-    platformAdminDashboardRouteRouteChildren,
   )
 
 interface platformOwnerDashboardRouteRouteChildren {
@@ -456,19 +451,16 @@ const platformOwnerDashboardRouteRouteWithChildren =
   )
 
 interface platformRouteRouteChildren {
+  platformAdminRouteRoute: typeof platformAdminRouteRouteWithChildren
   platformDashboardRouteRoute: typeof platformDashboardRouteRouteWithChildren
-  platformAdminDashboardRouteRoute: typeof platformAdminDashboardRouteRouteWithChildren
   platformOwnerDashboardRouteRoute: typeof platformOwnerDashboardRouteRouteWithChildren
-  platformAdminApprovalIndexRoute: typeof platformAdminApprovalIndexRoute
 }
 
 const platformRouteRouteChildren: platformRouteRouteChildren = {
+  platformAdminRouteRoute: platformAdminRouteRouteWithChildren,
   platformDashboardRouteRoute: platformDashboardRouteRouteWithChildren,
-  platformAdminDashboardRouteRoute:
-    platformAdminDashboardRouteRouteWithChildren,
   platformOwnerDashboardRouteRoute:
     platformOwnerDashboardRouteRouteWithChildren,
-  platformAdminApprovalIndexRoute: platformAdminApprovalIndexRoute,
 }
 
 const platformRouteRouteWithChildren = platformRouteRoute._addFileChildren(

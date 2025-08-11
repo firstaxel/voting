@@ -64,18 +64,19 @@ export const getByElectionId = privateProcedure
 			electionId: z.string(),
 		}),
 	)
-	.handler(async ({ input }) => {
+	.handler(async ({ input, context }) => {
 		try {
 			const { electionId } = input;
-			const res = await db.query.elections.findFirst({
+			const res = await context.db.query.elections.findFirst({
 				where: (table, { eq }) => eq(table.uniqueId, electionId),
 				with: {
-					candidates: true,
+					candidatesRegistration: {
+						with: {
+							candidates: true,
+						},
+					},
 					votes: true,
 					voters: true,
-					electionDepartments: true,
-					electionAcademicLevels: true,
-					electionAuthMethods: true,
 				},
 			});
 
@@ -90,7 +91,11 @@ export const get = privateProcedure.handler(async ({ context }) => {
 		const res = await db.query.elections.findMany({
 			where: (table, { eq }) => eq(table.createdBy, context.userId),
 			with: {
-				candidates: true,
+				candidatesRegistration: {
+					with: {
+						candidates: true,
+					},
+				},
 				votes: true,
 				voters: true,
 			},

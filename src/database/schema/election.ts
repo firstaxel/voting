@@ -6,7 +6,6 @@ import {
 	numeric,
 	pgEnum,
 	pgTable,
-	primaryKey,
 	serial,
 	text,
 	timestamp,
@@ -111,17 +110,33 @@ export const elections = pgTable("elections", {
 	createdBy: varchar("createdBy").references(() => users.id, {
 		onDelete: "cascade",
 	}),
+	departments: text("departments").array(),
+	authMethods: text("auth_methods").array(),
+	academicLevels: text("academic_levels").array(),
+
 	...timestamps,
 });
 
-export const candidates = pgTable("candidates", {
+export const candidatesRegistration = pgTable("candidates-registration", {
+	id: varchar("id", { length: 255 })
+		.unique()
+		.$defaultFn(() => uuid()),
+
+	autoApproval: boolean("auto_approval").default(true),
+
+	electionId: varchar("election_unique_id")
+		.notNull()
+		.references(() => elections.uniqueId, { onDelete: "cascade" }),
+});
+
+export const candidate = pgTable("candidate", {
 	id: serial("id").primaryKey(),
 	uniqueId: varchar("unique_id", { length: 255 })
 		.unique()
 		.$defaultFn(() => uuid()),
-	electionId: integer("election_id")
+	candidateRegistrationId: varchar("candidate_registration_id")
 		.notNull()
-		.references(() => elections.id, { onDelete: "cascade" }),
+		.references(() => candidatesRegistration.id, { onDelete: "cascade" }),
 	userId: varchar("user_id", { length: 255 }).references(() => users.id, {
 		onDelete: "cascade",
 	}), // Assuming a user ID from an external auth system, or make it serial if users are managed internally
@@ -144,7 +159,6 @@ export const voters = pgTable("voters", {
 	userId: varchar("user_id", { length: 255 }).unique().notNull(), // Unique ID for the voter (e.g., student ID, staff ID)
 	email: varchar("email", { length: 255 }).unique().notNull(), // Voter's email
 	hasVoted: boolean("has_voted").notNull().default(false),
-	// You might store other eligibility data here if not dynamic (e.g., pre-fetched dept, academic level)
 	...timestamps,
 });
 
@@ -157,7 +171,7 @@ export const votes = pgTable("votes", {
 		.references(() => voters.id, { onDelete: "set null" }),
 	candidateId: integer("candidate_id")
 		.notNull()
-		.references(() => candidates.id, { onDelete: "cascade" }),
+		.references(() => candidate.id, { onDelete: "cascade" }),
 	castAt: timestamp("cast_at").notNull().default(sql`now()`),
 	// Additional fields for auditing or encrypted payload if needed
 	encryptedPayload: text("encrypted_payload"), // If ballotEncryptionEnabled
@@ -166,62 +180,32 @@ export const votes = pgTable("votes", {
 // --- Junction Tables for Many-to-Many Relationships ---
 
 // Election <-> Department (if specificDepartments is true)
-export const electionDepartments = pgTable(
-	"election_departments",
-	{
-		electionId: integer("election_id")
-			.notNull()
-			.references(() => elections.id, { onDelete: "cascade" }),
-		departmentName: varchar("department_name", { length: 255 }).notNull(),
-	},
-	(t) => ({
-		pk: primaryKey({ columns: [t.electionId, t.departmentName] }),
-	}),
-);
 
-// Election <-> Academic Level (if academicLevelRequired is true)
-export const electionAcademicLevels = pgTable(
-	"election_academic_levels",
-	{
-		electionId: integer("election_id")
-			.notNull()
-			.references(() => elections.id, { onDelete: "cascade" }),
-		academicLevel: academicLevelEnum("academic_level").notNull(),
-	},
-	(t) => ({
-		pk: primaryKey({ columns: [t.electionId, t.academicLevel] }),
+export const electionsRelations = relations(elections, ({ many, one }) => ({
+	candidatesRegistration: one(candidatesRegistration, {
+		fields: [elections.uniqueId],
+		references: [candidatesRegistration.electionId],
 	}),
-);
-
-// Election <-> Auth Method (many-to-many as multiple auth methods can be selected)
-export const electionAuthMethods = pgTable(
-	"election_auth_methods",
-	{
-		electionId: integer("election_id")
-			.notNull()
-			.references(() => elections.id, { onDelete: "cascade" }),
-		authMethod: authMethodEnum("auth_method").notNull(),
-	},
-	(t) => ({
-		pk: primaryKey({ columns: [t.electionId, t.authMethod] }),
-	}),
-);
-
-export const electionsRelations = relations(elections, ({ many }) => ({
-	candidates: many(candidates),
 	voters: many(voters),
 	votes: many(votes),
-	electionDepartments: many(electionDepartments),
-	electionAcademicLevels: many(electionAcademicLevels),
-	electionAuthMethods: many(electionAuthMethods),
 }));
 
-export const candidatesRelations = relations(candidates, ({ one }) => ({
-	election: one(elections, {
-		fields: [candidates.electionId],
-		references: [elections.id],
+export const candidatesRegsitrationRelations = relations(
+	candidatesRegistration,
+	({ one, many }) => ({
+		candidates: many(candidate),
+		election: one(elections, {
+			fields: [candidatesRegistration.electionId],
+			references: [elections.id],
+		}),
 	}),
-	// If a candidate can have multiple positions or be associated with specific roles, you might add more here
+);
+
+export const candidateRelations = relations(candidate, ({ one }) => ({
+	candidateRegistrations: one(candidatesRegistration, {
+		fields: [candidate.candidateRegistrationId],
+		references: [candidatesRegistration.id],
+	}),
 }));
 
 export const votersRelations = relations(voters, ({ one, many }) => ({
@@ -241,39 +225,8 @@ export const votesRelations = relations(votes, ({ one }) => ({
 		fields: [votes.voterId],
 		references: [voters.id],
 	}),
-	candidate: one(candidates, {
+	candidates: one(candidate, {
 		fields: [votes.candidateId],
-		references: [candidates.id],
+		references: [candidate.id],
 	}),
 }));
-
-export const electionDepartmentsRelations = relations(
-	electionDepartments,
-	({ one }) => ({
-		election: one(elections, {
-			fields: [electionDepartments.electionId],
-			references: [elections.id],
-		}),
-		// If you had a 'departments' table, you'd link it here
-	}),
-);
-
-export const electionAcademicLevelsRelations = relations(
-	electionAcademicLevels,
-	({ one }) => ({
-		election: one(elections, {
-			fields: [electionAcademicLevels.electionId],
-			references: [elections.id],
-		}),
-	}),
-);
-
-export const electionAuthMethodsRelations = relations(
-	electionAuthMethods,
-	({ one }) => ({
-		election: one(elections, {
-			fields: [electionAuthMethods.electionId],
-			references: [elections.id],
-		}),
-	}),
-);
